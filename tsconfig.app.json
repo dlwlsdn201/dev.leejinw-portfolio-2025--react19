@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "ES2020", // ECMAScript 타겟 버전을 최신으로 설정
+    "lib": ["ES2020", "DOM", "DOM.Iterable"], // DOM과 ES 표준 라이브러리를 포함
+    "useDefineForClassFields": true, // 클래스 필드의 동작을 최신 사양에 맞게 설정
+    "module": "ESNext", // 최신 ESMAScript 모듈 시스템 사용
+    "skipLibCheck": true, // 라이브러리의 타입 검사를 생략하여 빌드 속도 향상
+    "baseUrl": "./", // 기본 경로 설정
+
+    /* Bundler mode */
+    "moduleResolution": "Node", // Node.js 모듈 해석 방식 사용
+    "resolveJsonModule": true, // JSON 파일을 import 할 수 있도록 설정
+    "isolatedModules": true, // Vite 와 호환되도록 각 파일을 독립된 모듈로 취급
+    "esModuleInterop": true, // CommonJS 와 호환성 유지
+    "allowImportingTsExtensions": true, // ES 모듈을 CommonJS 방식으로 import 가능
+    "moduleDetection": "force",
+    "noEmit": true, // Vite 가 빌드를 처리하므로 Typescript 에서 파일을 생성하지 않음
+    "jsx": "react-jsx", // React  17+ 를 사용하기 위한 설정
+
+    /* Linting */
+    "strict": true, // 엄격한 타입 검사 활성화
+    "forceConsistentCasingInFileNames": true, // 파일명 대소문자 일관성 검사
+    "noUnusedLocals": true, // 사용되지 않은 변수 검사
+    "noUnusedParameters": true, // 사용되지 않은 파라미터들 검사
+    "noFallthroughCasesInSwitch": true,
+    "types": [
+      "vite/client",
+      "jest",
+      "@testing-library/jest-dom",
+      "@jest/globals"
+    ] // Vite, Jest, RTL 타입 추가
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
