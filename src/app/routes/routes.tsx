@@ -1,5 +1,6 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from 'src/App';
+import { RootLayout } from './layout';
 
 const routes = [
   {
@@ -8,12 +9,11 @@ const routes = [
   },
 ];
 
-export const RoutesProvider = () => (
-  <BrowserRouter>
-    <Routes>
-      {routes.map((route) => (
-        <Route path={route.path} element={route.element} />
-      ))}
-    </Routes>
-  </BrowserRouter>
-);
+const router = createBrowserRouter([
+  {
+    element: <RootLayout />,
+    children: routes,
+  },
+]);
+
+export const Router = () => <RouterProvider router={router} />;
