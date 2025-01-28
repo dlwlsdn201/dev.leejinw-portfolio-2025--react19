@@ -5,7 +5,7 @@
     "useDefineForClassFields": true, // 클래스 필드의 동작을 최신 사양에 맞게 설정
     "module": "ESNext", // 최신 ESMAScript 모듈 시스템 사용
     "skipLibCheck": true, // 라이브러리의 타입 검사를 생략하여 빌드 속도 향상
-    "baseUrl": "./", // 기본 경로 설정
+    "baseUrl": ".", // 기본 경로 설정
 
     /* Bundler mode */
     "moduleResolution": "node", // Node.js 모듈 해석 방식 사용
@@ -30,6 +30,6 @@
       "@jest/globals"
     ] // Vite, Jest, RTL 타입 추가
   },
-  "include": ["src", "./**/*"],
+  "include": ["src/**/*", "./**/*", "vite.config.js"],
   "exclude": ["node_modules", "dist"]
 }
