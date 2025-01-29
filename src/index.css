@@ -1,9 +1,31 @@
 @import './tailwind.css';
 
+@font-face {
+  font-family: 'Paperlogy-Regular', Inter, system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
+  font-weight: normal;
+  src: url('./shared/assets/font/Paperlogy-4Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Paperlogy-Thin', Inter, system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
+  font-weight: normal;
+  src: url('./shared/assets/font/Paperlogy-3Light.ttf');
+}
+
+@font-face {
+  font-family: 'Paperlogy-Bold', Inter, system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
+  font-weight: normal;
+  src: url('./shared/assets/font/Paperlogy-6SemiBold.ttf');
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  font-family: 'Paperlogy-Regular', Inter, system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
 
   color-scheme: light dark;
   /* color: rgba(255, 255, 255, 0.87); */
@@ -18,4 +40,5 @@
 * {
   /* padding: 0; */
   margin: 0;
+  font-family: 'Paperlogy-Regular';
 }
