@@ -3,9 +3,11 @@ import { Outlet } from 'react-router-dom';
 
 export const RootLayout = () => (
   <div className="relative cover-fill h-[100%]">
-    <img
-      src="/src/shared/assets/background/background.gif"
-      className="absolute w-full h-full z-[-2] object-cover"
+    <div
+      className="fixed inset-0 w-full h-full z-[-2] bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: "url('/src/shared/assets/background/background.gif')",
+      }}
     />
     <div className="absolute w-full h-full z-[-1] bg-black opacity-20" />
     <SharedHeader />
