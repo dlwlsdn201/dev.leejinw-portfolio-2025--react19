@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Button, useMantineColorScheme } from '@mantine/core';
 
 export const IntroSection: React.FC = () => {

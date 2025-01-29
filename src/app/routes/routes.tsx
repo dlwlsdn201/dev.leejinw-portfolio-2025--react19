@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { RootLayout } from './layout';
-import App from 'src/pages/App';
+import Intro from 'src/pages/Intro';
 
 interface Route {
   path: string;
@@ -12,17 +12,17 @@ export const routes: Route[] = [
   {
     path: '/',
     label: 'Intro',
-    element: <App />,
+    element: <Intro />,
   },
   {
     path: '/projects',
     label: 'Projects',
-    element: <App />,
+    element: <Intro />,
   },
   {
     path: '/comments',
     label: 'Comments',
-    element: <App />,
+    element: <Intro />,
   },
 ];
 

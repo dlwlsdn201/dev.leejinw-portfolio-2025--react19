@@ -1,13 +1,13 @@
+import { PADDING_CONFIG } from '@/app/config/style';
 import { routes } from '@app/routes/routes';
 import { NavLink } from 'react-router-dom';
-import { PADDING_CONFIG } from '@app/config/style';
 
 export const SharedHeader = () => {
   return (
-    <div className="sticky top-0 w-full z-[1]">
-      <nav
-        className={`w-full flex z-50  justify-center decoration gap-10 py-[${PADDING_CONFIG.padding_sm}]`}
-      >
+    <div
+      className={`sticky top-0 w-full z-[1] h-[5vh] ${PADDING_CONFIG.py_sm}`}
+    >
+      <nav className={`w-full flex z-50 justify-center decoration gap-10`}>
         {routes.map(({ path, label }) => (
           <NavLink
             to={path}
