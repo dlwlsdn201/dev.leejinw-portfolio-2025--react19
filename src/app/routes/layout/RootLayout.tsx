@@ -9,7 +9,7 @@ export const RootLayout = () => (
         backgroundImage: "url('/src/shared/assets/background/background.gif')",
       }}
     />
-    <div className="absolute w-full h-full z-[-1] bg-black opacity-20" />
+    <div className="absolute w-full h-full z-[-1] bg-black opacity-40" />
     <SharedHeader />
     <div className="px-6 w-full z-[1]">
       {/* Header 자리 */}
