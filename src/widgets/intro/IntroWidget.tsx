@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { StyledContainer } from './style/StyledContainer';
 
-const CONTENTS_VALUE = "Welcome to the dev.leejinw's site"; // 출력할 텍스트
+const CONTENTS_VALUE = "Let's see about dev.leejinw 🤓"; // 출력할 텍스트
 
 export const IntroWidget = () => {
   const [displayText, setDisplayText] = useState('');
