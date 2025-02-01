@@ -1,14 +1,11 @@
 import { useThemeStore } from '@store/index';
 import '@/App.css';
 import { IntroWidget, TimelineWidget } from '@/widgets/intro';
+import { ProjectAlbumWidget } from '@widgets/intro/ProjectAlbumWidget';
 
 export const Section: React.FC<{ children: React.ReactNode }> = ({
   children,
-}) => (
-  <section className="border-2 w-full h-[95vh] border-amber-200 text-white">
-    {children}
-  </section>
-);
+}) => <section className="w-full h-[95vh] text-white">{children}</section>;
 
 function Intro() {
   const { isDarkMode } = useThemeStore();
@@ -24,7 +21,9 @@ function Intro() {
         <Section>
           <TimelineWidget />
         </Section>
-        <Section>Section3</Section>
+        <Section>
+          <ProjectAlbumWidget />
+        </Section>
       </div>
     </div>
   );

@@ -10,9 +10,9 @@ export const RootLayout = () => (
       }}
     />
     <div className="absolute w-full h-full z-[-1] bg-black opacity-40" />
+    {/* Header 자리 */}
     <SharedHeader />
-    <div className="px-6 w-full z-[1]">
-      {/* Header 자리 */}
+    <div className="px-6 w-full z-[1] overflow-y-scroll">
       <Outlet />
     </div>
   </div>
