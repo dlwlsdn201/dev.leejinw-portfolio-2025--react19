@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
+import { StyledContainer } from './style/StyledContainer';
 
 const CONTENTS_VALUE = "Welcome to the dev.leejinw's site"; // 출력할 텍스트
 
@@ -19,25 +20,27 @@ export const IntroWidget = () => {
   }, [index]);
 
   return (
-    <motion.div
-      className="flex gap-1.5 items-center justify-center h-[100%] text-gray-300 text-5xl"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1.5 }}
-    >
-      <motion.span
-        className="text-center flex items-center gap-2"
-        initial={{ opacity: 0, y: 0 }}
-        animate={{ opacity: 1, y: -20 }}
-        transition={{ duration: 2, ease: 'easeOut' }}
+    <StyledContainer>
+      <motion.div
+        className="flex gap-1.5 items-center justify-center h-[100%] text-gray-300 text-5xl"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5 }}
       >
-        {displayText}
         <motion.span
-          className="w-1 h-8 bg-gray-300 inline-block animate-blink"
-          animate={{ opacity: [0, 1, 0] }}
-          transition={{ repeat: Infinity, duration: 0.8 }}
-        />
-      </motion.span>
-    </motion.div>
+          className="text-center flex items-center gap-2"
+          initial={{ opacity: 0, y: 0 }}
+          animate={{ opacity: 1, y: -20 }}
+          transition={{ duration: 2, ease: 'easeOut' }}
+        >
+          {displayText}
+          <motion.span
+            className="w-1 h-8 bg-gray-300 inline-block animate-blink"
+            animate={{ opacity: [0, 1, 0] }}
+            transition={{ repeat: Infinity, duration: 0.8 }}
+          />
+        </motion.span>
+      </motion.div>
+    </StyledContainer>
   );
 };

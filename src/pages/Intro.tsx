@@ -1,6 +1,6 @@
 import { useThemeStore } from '@store/index';
 import '@/App.css';
-import { IntroWidget } from '@/widgets/intro';
+import { IntroWidget, TimelineWidget } from '@/widgets/intro';
 
 export const Section: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -21,7 +21,9 @@ function Intro() {
         <Section>
           <IntroWidget />
         </Section>
-        <Section>Section2</Section>
+        <Section>
+          <TimelineWidget />
+        </Section>
         <Section>Section3</Section>
       </div>
     </div>
