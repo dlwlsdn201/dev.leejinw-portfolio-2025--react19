@@ -1,6 +1,6 @@
 import { PADDING_CONFIG } from '@/app/config/style';
-import { SkillsIconProvider } from '@/shared/assets/icon/skills';
 import React from 'react';
+import { cardBackgroundStyle } from '@widgets/intro/config/style';
 
 // types.ts
 interface Project {
@@ -22,12 +22,11 @@ interface ProjectCardProps {
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
   const aosAnimation = 'fade-right';
-  console.log({ project: project.skills });
   return (
     <div
       data-aos={aosAnimation}
       data-aos-delay={index * 200}
-      className="group relative overflow-hidden rounded-xl bg-gray-900/20 backdrop-blur-sm cursor-pointer"
+      className={`group relative overflow-hidden rounded-xl ${cardBackgroundStyle} cursor-pointer`}
     >
       <div className="w-full">
         <div className="aspect-[16/9] relative">
@@ -38,8 +37,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
           />
           <div className="absolute inset-0 flex p-2 justify-center items-end w-full h-full">
             <div className="z-10 relative flex gap-2 -translate-y-10 group-hover:translate-y-0 transition-transform duration-300">
-              {project.skills.map((item) => (
+              {project.skills.map((item, idx) => (
                 <span
+                  key={`icon-skills-${idx}`}
                   className={`opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
                 >
                   {item}

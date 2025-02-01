@@ -1,6 +1,7 @@
 // TimelineCard.tsx
 import React from 'react';
 import 'aos/dist/aos.css';
+import { cardBackgroundStyle } from '@widgets/intro/config/style';
 
 interface TimelineCardProps {
   item: TimelineItem;
@@ -23,7 +24,9 @@ export const TimelineCard: React.FC<TimelineCardProps> = ({ item }) => {
       data-aos={isLeft ? 'fade-left' : 'fade-right'}
     >
       <div className={`w-5/12 p-4 ${isLeft ? 'text-right' : 'text-left'}`}>
-        <div className="bg-gray-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-lg shadow-xl hover:transform hover:scale-105 transition duration-300">
+        <div
+          className={`${cardBackgroundStyle} border-2 border-gray-400/30 p-6 rounded-lg shadow-xl hover:transform hover:scale-105 transition duration-300`}
+        >
           <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
           <p className="text-gray-300 text-sm mb-2">{item.period}</p>
           {item.description && (

@@ -1,9 +1,7 @@
 // Timeline.tsx
-import React, { useEffect } from 'react';
-import AOS from 'aos';
+import React from 'react';
 import { TimelineCard } from './components/TimelineCard';
 import { TimelineItem } from './model/TimelineWidget';
-import { useAos } from './hook/useAos';
 import { StyledContainer } from './style/StyledContainer';
 
 export const TimelineWidget: React.FC = () => {
@@ -49,12 +47,14 @@ export const TimelineWidget: React.FC = () => {
     },
   ];
 
-  useAos();
-
   return (
     <StyledContainer>
-      <div className="h-full relative p-6">
-        <div className="absolute h-[100%] left-1/2 py-6 top-0 bottom-0 w-px bg-gray-500 transform -translate-x-1/2" />
+      <div className="h-[100%] relative ">
+        <div
+          data-aos="zoom-in"
+          data-aos-offset="0"
+          className="absolute h- left-1/2 py-6 top-0 bottom-0 w-px bg-gray-500 transform -translate-x-1/2"
+        />
         {/* Center Line */}
         <div className="space-y-24">
           {timelineData.map((item) => (

@@ -29,8 +29,8 @@ export const IntroWidget = () => {
       >
         <motion.span
           className="text-center flex items-center gap-2"
-          initial={{ opacity: 0, y: 0 }}
-          animate={{ opacity: 1, y: -20 }}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 2, ease: 'easeOut' }}
         >
           {displayText}

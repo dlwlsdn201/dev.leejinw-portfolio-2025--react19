@@ -2,7 +2,7 @@ import { ProjectCard } from './components/ProjectCard';
 import { StyledContainer } from './style/StyledContainer';
 import Project_1_Image from '@shared/assets/image/project_sample.jpeg';
 import { SkillsIconProvider } from '@shared/assets/icon/skills';
-import { useAos } from './hook/useAos';
+// import { useAos } from './hook/useAos';
 
 const SAMPLE_data = [
   {
@@ -98,7 +98,7 @@ const SAMPLE_data = [
 ];
 
 export const ProjectAlbumWidget = () => {
-  useAos();
+  // useAos();
 
   return (
     <StyledContainer>
