@@ -13,13 +13,13 @@
     "test:auto": "jest --watch --coverage"
   },
   "dependencies": {
+    "@fullpage/react-fullpage": "^0.1.48",
     "@mantine/core": "^7.16.1",
     "@mantine/hooks": "^7.16.1",
     "@mantine/notifications": "^7.16.1",
     "@tailwindcss/vite": "^4.0.0",
     "@types/aos": "^3.0.7",
     "aos": "^2.3.4",
-    "fullpage.js": "^4.0.33",
     "motion": "^12.0.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
