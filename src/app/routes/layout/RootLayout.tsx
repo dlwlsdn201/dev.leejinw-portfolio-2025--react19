@@ -12,7 +12,7 @@ export const RootLayout = () => (
     <div className="absolute w-full h-full z-[-1] bg-black opacity-40" />
     {/* Header 자리 */}
     <SharedHeader />
-    <div className="px-6 w-full z-[1] overflow-y-scroll">
+    <div className="px-6 w-full z-[1]">
       <Outlet />
     </div>
   </div>

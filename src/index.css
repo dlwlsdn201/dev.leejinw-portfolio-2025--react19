@@ -42,3 +42,7 @@
   margin: 0;
   font-family: 'Paperlogy-Regular';
 }
+
+html {
+  overflow-x: hidden;
+}
