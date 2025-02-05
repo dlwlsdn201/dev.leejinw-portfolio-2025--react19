@@ -26,6 +26,9 @@ importers:
       aos:
         specifier: ^2.3.4
         version: 2.3.4
+      fullpage.js:
+        specifier: ^4.0.33
+        version: 4.0.33
       motion:
         specifier: ^12.0.6
         version: 12.0.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1601,6 +1604,9 @@ packages:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
+
+  fullpage.js@4.0.33:
+    resolution: {integrity: sha512-IPycVYcK5U27IliKgnt5+jKxDWzzJ0uoKzK/Fhm9GcGZJzNrggJqMRNX4BDUbO8oq4o2pDkZCmbHyfqcaPSRcw==}
 
   function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
@@ -4470,6 +4476,8 @@ snapshots:
 
   fsevents@2.3.3:
     optional: true
+
+  fullpage.js@4.0.33: {}
 
   function-bind@1.1.2: {}
 
