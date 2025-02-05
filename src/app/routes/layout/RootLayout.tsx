@@ -8,8 +8,9 @@ export const RootLayout = () => (
       style={{
         backgroundImage: "url('/src/shared/assets/background/background.gif')",
       }}
-    />
-    <div className="absolute w-full h-full z-[-1] bg-black opacity-40" />
+    >
+      <div className="absolute w-full h-[100%] z-[-1] bg-black opacity-40" />
+    </div>
     {/* Header 자리 */}
     <SharedHeader />
     <div className="px-6 w-full z-[1]">
