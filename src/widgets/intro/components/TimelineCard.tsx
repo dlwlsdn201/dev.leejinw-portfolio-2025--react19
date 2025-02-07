@@ -5,6 +5,7 @@ import { cardBackgroundStyle } from '@widgets/intro/config/style';
 
 interface TimelineCardProps {
   item: TimelineItem;
+  index: number;
 }
 
 // types.ts
@@ -16,12 +17,13 @@ interface TimelineItem {
   position: 'left' | 'right';
 }
 
-export const TimelineCard: React.FC<TimelineCardProps> = ({ item }) => {
+export const TimelineCard: React.FC<TimelineCardProps> = ({ item, index }) => {
   const isLeft = item.position === 'left';
   return (
     <div
-      className={`flex w-full ${isLeft ? 'justify-end' : 'justify-start'}`}
       data-aos={isLeft ? 'fade-left' : 'fade-right'}
+      data-aos-delay={index * 200} // 200ms씩 delay
+      className={`flex w-full ${isLeft ? 'justify-end' : 'justify-start'}`}
     >
       <div className={`w-5/12 p-4 ${isLeft ? 'text-right' : 'text-left'}`}>
         <div

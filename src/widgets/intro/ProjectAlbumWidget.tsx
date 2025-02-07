@@ -85,16 +85,6 @@ const SAMPLE_data = [
     skills: SkillsIconProvider(['nextjs', 'styledComponents']),
     link: '#',
   },
-  {
-    id: 7,
-    title: 'AR 가구 배치 시뮬레이터3',
-    description:
-      'Three.js와 AR.js를 활용한 실시간 가구 배치 시뮬레이션 앱. 모바일에 최적화된 UI/UX를 제공합니다.',
-    imageSrc: Project_1_Image,
-    category: 'AR/VR',
-    skills: SkillsIconProvider(['react', 'styledComponents']),
-    link: '#',
-  },
 ];
 
 export const ProjectAlbumWidget = () => {
@@ -102,7 +92,7 @@ export const ProjectAlbumWidget = () => {
 
   return (
     <StyledContainer>
-      <div className="min-h-screen p-8">
+      <div className="h-full px-8">
         <div className="max-w-7xl mx-auto">
           {/* Project Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 export const SharedHeader = () => {
   return (
     <div
-      className={`sticky top-0 w-full z-[1] h-[3rem] ${PADDING_CONFIG.py_sm}`}
+      className={`sticky top-0 w-full z-[1] h-[3.25rem] ${PADDING_CONFIG.py_sm}`}
     >
       <nav className={`w-full flex z-50 justify-center decoration gap-10`}>
         {routes.map(({ path, label }) => (

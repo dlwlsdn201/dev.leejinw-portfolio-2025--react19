@@ -53,12 +53,12 @@ export const TimelineWidget: React.FC = () => {
         <div
           data-aos="zoom-in"
           data-aos-offset="0"
-          className="absolute h- left-1/2 py-6 top-0 bottom-0 w-px bg-gray-500 transform -translate-x-1/2"
+          className="absolute left-1/2 py-6 top-0 bottom-0 w-px bg-gray-500 transform -translate-x-1/2"
         />
         {/* Center Line */}
         <div className="space-y-24">
-          {timelineData.map((item) => (
-            <TimelineCard key={item.id} item={item} />
+          {timelineData.map((item, index) => (
+            <TimelineCard key={item.id} item={item} index={index} />
           ))}
         </div>
       </div>
