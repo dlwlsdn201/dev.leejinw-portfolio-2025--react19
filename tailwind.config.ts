@@ -1,5 +1,4 @@
 import { tailwindThemeConfig } from 'src/app/config/colors';
-import { PADDING_CONFIG } from '@app/config/style';
 
 /** @type {import('tailwindcss').Config} */
 export default {

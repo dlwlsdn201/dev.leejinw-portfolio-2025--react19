@@ -1,6 +1,6 @@
 import { useThemeStore } from '@store/index';
 import '@/App.css';
-import { IntroWidget, TimelineWidget } from '@/widgets/intro';
+import { IntroWidget, TimelineWidget } from '@widgets/intro';
 import { ProjectAlbumWidget } from '@widgets/intro/ProjectAlbumWidget';
 import { useAos } from '@widgets/intro/hook/useAos';
 import { TEXT_SIZE_CONFIG } from '@app/config/style';
