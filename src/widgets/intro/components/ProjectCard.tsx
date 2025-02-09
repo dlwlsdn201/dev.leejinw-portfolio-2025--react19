@@ -60,7 +60,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
           <p className="text-sm font-medium text-emerald-400 group-hover:hidden">
             {project.category}
           </p>
-          <h3 className="text-xl font-bold text-white">{project.title}</h3>
+          <h3 className="text-xl md:text-sm xl:text-xl font-bold text-white">
+            {project.title}
+          </h3>
           <p className="text-sm text-gray-300 line-clamp-2 opacity-0 group-hover:opacity-100">
             {project.description}
           </p>
