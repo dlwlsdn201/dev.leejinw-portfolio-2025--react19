@@ -7,6 +7,8 @@ import {
   SiStyledcomponents,
   SiTailwindcss,
   SiTypescript,
+  SiReactquery,
+  SiMantine,
 } from 'react-icons/si';
 
 type Skills =
@@ -16,7 +18,9 @@ type Skills =
   | 'javascript'
   | 'typescript'
   | 'nextjs'
-  | 'eslint';
+  | 'eslint'
+  | 'tanstack/react-query'
+  | 'mantineUI';
 
 /**
  * @desc React Icon
@@ -31,6 +35,8 @@ const JavascriptIcon = <SiJavascript size={IconSize.SMALL} color="#F7DF1E" />;
 const TypescriptIcon = <SiTypescript size={IconSize.SMALL} color="#3178C6" />;
 const NextjsIcon = <SiNextdotjs size={IconSize.SMALL} color="#ffffff" />;
 const EslintIcon = <SiEslint size={IconSize.SMALL} color="#4B32C3" />;
+const ReactqueryIcon = <SiReactquery size={IconSize.SMALL} color="#F1672E" />;
+const SiMantineIcon = <SiMantine size={IconSize.SMALL} color="#339AF0" />;
 
 const iconMaps: { [key in Skills]: React.ReactElement } = {
   react: ReactIcon,
@@ -40,6 +46,8 @@ const iconMaps: { [key in Skills]: React.ReactElement } = {
   typescript: TypescriptIcon,
   nextjs: NextjsIcon,
   eslint: EslintIcon,
+  'tanstack/react-query': ReactqueryIcon,
+  mantineUI: SiMantineIcon,
 };
 
 export const SkillsIconProvider = (skillKeys: Skills[]) => {
