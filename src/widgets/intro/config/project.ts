@@ -17,7 +17,7 @@ export const PROJECT_CONFIG = [
       'styledComponents',
       'mantineUI',
     ]),
-    link: '#',
+    link: 'https://project-box-office-react-dlwlsdn201s-projects.vercel.app/',
   },
   {
     id: 2,

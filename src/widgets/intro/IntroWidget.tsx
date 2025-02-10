@@ -27,11 +27,16 @@ export const IntroWidget = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5 }}
       >
-        <motion.span
-          className="text-center flex items-center gap-2"
+        <motion.div
+          className="text-center flex py-6 items-center gap-2 cursor-pointer"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 2, ease: 'easeOut' }}
+          transition={{ duration: 1, ease: 'easeOut' }}
+          whileHover={{
+            rotateY: 360,
+            transition: { duration: 2, ease: 'linear', repeat: Infinity },
+            scale: 1,
+          }}
         >
           {displayText}
           <motion.span
@@ -39,7 +44,7 @@ export const IntroWidget = () => {
             animate={{ opacity: [0, 1, 0] }}
             transition={{ repeat: Infinity, duration: 0.8 }}
           />
-        </motion.span>
+        </motion.div>
       </motion.div>
     </StyledContainer>
   );

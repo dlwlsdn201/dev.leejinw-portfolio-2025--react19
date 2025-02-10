@@ -21,12 +21,17 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
+  const goToProjectUrl = (projectLink: string) => {
+    window.open(projectLink, '_blank');
+  };
+
   const aosAnimation = 'fade-right';
   return (
     <div
       data-aos={aosAnimation}
       data-aos-delay={index * 200}
       className={`group relative overflow-hidden rounded-xl ${cardBackgroundStyle} cursor-pointer`}
+      onClick={() => goToProjectUrl(project.link)}
     >
       <div className="w-full">
         <div className="aspect-[16/9] relative">
