@@ -22,7 +22,6 @@ export const useFullPageScroll = <SectionId extends number>({
 
     const handleScroll = (event: WheelEvent) => {
       if (isThrottled) return; // 이벤트 연속 실행 방지
-      console.log('isThrottled:', isThrottled);
       isThrottled = true;
       setTimeout(() => (isThrottled = false), 100); // 0.5초 동안 이벤트 중복 실행 방지
 
