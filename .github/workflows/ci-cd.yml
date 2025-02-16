@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: production  # 🔥 Environments 추가 (GitHub Settings에 존재해야 함)
+    
     env:
       AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_ACCESS_KEY }}
@@ -38,25 +40,13 @@ jobs:
 
       - name: Build project
         run: pnpm run build  # pnpm으로 빌드 실행
-
-      - name: Test For valid environment 
-        run: |
-          echo "S3_BUCKET_NAME=${{ vars.S3_BUCKET_NAME }}"
-          echo "AWS Region: $AWS_REGION"
-          echo "S3 Bucket Name: $S3_BUCKET_NAME"
         
       - name: Deploy to S3
         run: |
           echo "Deploying to S3 bucket: $S3_BUCKET_NAME in region $AWS_REGION"
           aws s3 sync ./dist "s3://$S3_BUCKET_NAME" --delete --region $AWS_REGION
-        env:
-          AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ vars.AWS_REGION }}
 
       - name: Invalidate CloudFront Cache
         run: |
           aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_ACCESS_KEY }}
+
