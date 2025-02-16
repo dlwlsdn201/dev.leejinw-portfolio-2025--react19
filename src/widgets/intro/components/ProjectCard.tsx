@@ -1,6 +1,7 @@
 import { PADDING_CONFIG } from '@/app/config/style';
 import React from 'react';
 import { cardBackgroundStyle } from '@widgets/intro/config/style';
+import { Tooltip } from '@mantine/core';
 
 // types.ts
 interface Project {
@@ -9,7 +10,7 @@ interface Project {
   description: string;
   imageSrc: string;
   category: string;
-  skills: React.ReactElement[];
+  skills: { name: string; icon: React.ReactElement }[];
   link: string;
 }
 
@@ -43,12 +44,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
           <div className="absolute inset-0 flex p-2 justify-center items-end w-full h-full">
             <div className="z-10 relative flex gap-2 -translate-y-10 group-hover:translate-y-0 transition-transform duration-300">
               {project.skills.map((item, idx) => (
-                <span
-                  key={`icon-skills-${idx}`}
-                  className={`opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                <Tooltip
+                  label={item.name}
+                  transitionProps={{ transition: 'pop', duration: 300 }}
                 >
-                  {item}
-                </span>
+                  <span
+                    key={`icon-skills-${idx}`}
+                    className={`opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+                  >
+                    {item.icon}
+                  </span>
+                </Tooltip>
               ))}
             </div>
           </div>

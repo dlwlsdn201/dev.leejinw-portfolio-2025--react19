@@ -38,16 +38,24 @@ const EslintIcon = <SiEslint size={IconSize.SMALL} color="#4B32C3" />;
 const ReactqueryIcon = <SiReactquery size={IconSize.SMALL} color="#F1672E" />;
 const SiMantineIcon = <SiMantine size={IconSize.SMALL} color="#339AF0" />;
 
-const iconMaps: { [key in Skills]: React.ReactElement } = {
-  react: ReactIcon,
-  styledComponents: StyledComponentsIcon,
-  tailwindCss: TailwindCssIcon,
-  javascript: JavascriptIcon,
-  typescript: TypescriptIcon,
-  nextjs: NextjsIcon,
-  eslint: EslintIcon,
-  'tanstack/react-query': ReactqueryIcon,
-  mantineUI: SiMantineIcon,
+const iconMaps: {
+  [key in Skills]: {
+    name: string;
+    icon: React.ReactElement;
+  };
+} = {
+  react: { name: 'React', icon: ReactIcon },
+  styledComponents: { name: 'Styled-Components', icon: StyledComponentsIcon },
+  tailwindCss: { name: 'tailwindCSS', icon: TailwindCssIcon },
+  javascript: { name: 'JS (ES6)', icon: JavascriptIcon },
+  typescript: { name: 'Typescript', icon: TypescriptIcon },
+  nextjs: { name: 'Next.js', icon: NextjsIcon },
+  eslint: { name: 'Eslint', icon: EslintIcon },
+  'tanstack/react-query': {
+    name: 'tanstack/react-query',
+    icon: ReactqueryIcon,
+  },
+  mantineUI: { name: 'mantine UI', icon: SiMantineIcon },
 };
 
 export const SkillsIconProvider = (skillKeys: Skills[]) => {
