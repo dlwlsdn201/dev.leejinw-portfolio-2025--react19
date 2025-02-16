@@ -10,14 +10,21 @@ jobs:
     runs-on: ubuntu-latest
     environment: production  # 🔥 Environments 추가 (GitHub Settings에 존재해야 함)
     
-    env:
-      AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: ${{ vars.AWS_REGION }}
-      S3_BUCKET_NAME: ${{ vars.S3_BUCKET_NAME }}
+    # env:
+    #   AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+    #   AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_ACCESS_KEY }}
+    #   AWS_REGION: ${{ vars.AWS_REGION }}
+    #   S3_BUCKET_NAME: ${{ vars.S3_BUCKET_NAME }}
 
     steps:
-      - name: Test For valid environment 
+      - name: Load GitHub Variables into GITHUB_ENV
+        run: |
+          echo "AWS_ACCESS_KEY_ID=${{ vars.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+          echo "AWS_SECRET_ACCESS_KEY=${{ vars.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
+          echo "AWS_REGION=${{ vars.AWS_REGION }}" >> $GITHUB_ENV
+          echo "S3_BUCKET_NAME=${{ vars.S3_BUCKET_NAME }}" >> $GITHUB_ENV
+
+      - name: Test Environment Variables
         run: |
           echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}"
           echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}"
