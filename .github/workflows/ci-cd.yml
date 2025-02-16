@@ -15,6 +15,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: ${{ vars.AWS_REGION }}
       S3_BUCKET_NAME: ${{ vars.S3_BUCKET_NAME }}
+      DISTRIBUTION_ID: ${{ vars.DISTRIBUTION_ID }}
 
     steps:
       - name: Test Environment Variables
