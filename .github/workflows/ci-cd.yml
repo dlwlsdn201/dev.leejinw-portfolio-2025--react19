@@ -28,11 +28,15 @@ jobs:
         run: pnpm run build  # pnpm으로 빌드 실행
 
       - name: Test For valid environment 
-        run: echo "S3_BUCKET_NAME=${{ secrets.S3_BUCKET_NAME }}"
+        run: |
+          echo "S3_BUCKET_NAME=${{ secrets.S3_BUCKET_NAME }}"
+          echo "AWS Region: $AWS_REGION"
+          echo "S3 Bucket Name: $S3_BUCKET_NAME"
         
       - name: Deploy to S3
         run: |
-          aws s3 sync ./dist "s3://dev-leejinw" --delete
+          echo "Deploying to S3 bucket: $S3_BUCKET_NAME in region $AWS_REGION"
+          aws s3 sync ./dist "s3://$S3_BUCKET_NAME" --delete --region $AWS_REGION
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
