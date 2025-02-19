@@ -48,5 +48,5 @@ jobs:
         run: |
           git fetch origin
           git checkout main
-          git merge --no-ff origin/${{ github.ref_name }} -m "Auto-merged by GitHub Actions"
+          git merge --no-ff origin/${{ github.ref_name }} -m "🔀 Auto merged by GitHub Actions"
           git push origin main
