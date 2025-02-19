@@ -1,15 +1,21 @@
 name: Deploy to AWS S3 & CloudFront
 
 on:
+  # "ci.yml"에서 "Auto Merge Feature Branches" 워크플로우가 완료되면 실행
+  workflow_run:
+    workflows: ['Auto Merge Feature Branches']
+    types:
+      - completed
+  # main 브랜치에 직접 push 이벤트 발생 시 실행
   push:
     branches:
-      - main  # main 브랜치에 push될 때 실행
+      - main # main 브랜치에 push될 때 실행
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: github-pages  # 🔥 Environments 추가 (GitHub Settings에 존재해야 함)
-    
+    environment: github-pages # 🔥 Environments 추가 (GitHub Settings에 존재해야 함)
+
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -24,24 +30,24 @@ jobs:
           echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}"
           echo "AWS_REGION=${AWS_REGION}"
           echo "S3_BUCKET_NAME=${S3_BUCKET_NAME}"
-    
+
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20  # 원하는 Node.js 버전 설정
+          node-version: 20 # 원하는 Node.js 버전 설정
 
       - name: Install pnpm
-        run: npm install -g pnpm  # pnpm 설치
+        run: npm install -g pnpm # pnpm 설치
 
       - name: Install dependencies
-        run: pnpm install  # pnpm으로 의존성 설치
+        run: pnpm install # pnpm으로 의존성 설치
 
       - name: Build project
-        run: pnpm run build  # pnpm으로 빌드 실행
-        
+        run: pnpm run build # pnpm으로 빌드 실행
+
       - name: Deploy to S3
         run: |
           echo "Deploying to S3 bucket: $S3_BUCKET_NAME in region $AWS_REGION"
@@ -51,4 +57,3 @@ jobs:
         run: |
           echo "Invalidating CloudFront cache for distribution: $DISTRIBUTION_ID"
           aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
-
