@@ -6,7 +6,7 @@ export const colorPalette = {
     text: {
       headline: '#1F2937', // 진한 차콜 그레이
       body: '#4B5563', // 중간 회색
-      subtle: '#6B7280', // 연한 회색
+      subtitle: '#6B7280', // 연한 회색
     },
     accent: {
       success: '#22C55E', // 밝은 녹색
@@ -21,7 +21,7 @@ export const colorPalette = {
     text: {
       headline: '#E5E7EB', // 밝은 회색 화이트
       body: '#D1D5DB', // 중간 밝기 그레이
-      subtle: '#9CA3AF', // 연한 회색
+      subtitle: '#9CA3AF', // 연한 회색
     },
     accent: {
       success: '#4ADE80', // 밝은 녹색
