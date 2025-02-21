@@ -30,10 +30,16 @@ const TEST_ENTRIES: GuestbookEntry[] = [
     content: '안녕하세요. 홍길동입니다.',
     createdAt: '2021-09-01T12:00:00',
   },
+  {
+    _id: '2',
+    author: '김미리',
+    content: '안녕하세요. 김미리입니다.',
+    createdAt: '2021-10-01T12:00:00',
+  },
 ];
 
 export const CommentListWidget = () => {
-  const [entries, setEntries] = useState<GuestbookEntry[]>(TEST_ENTRIES);
+  const [entries, setEntries] = useState<GuestbookEntry[]>([]);
   const [author, setAuthor] = useState('');
   const [password, setPassword] = useState('');
   const [content, setContent] = useState('');
@@ -44,9 +50,15 @@ export const CommentListWidget = () => {
 
   const fetchEntries = async () => {
     try {
-      const response = await fetch('/api/guestbook');
-      const data = await response.json();
-      setEntries(data);
+      // const response = await fetch('/api/guestbook');
+      // const data = await response.json();
+      const DATA = TEST_ENTRIES;
+      /* TODO -[추후 lib 핸들러 함수로 리팩터링] */
+      const sortedDataByDate = DATA.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+      setEntries(sortedDataByDate);
     } catch (error) {
       notifications.show({
         title: '오류',
@@ -171,7 +183,7 @@ export const CommentListWidget = () => {
   return (
     <div className="w-full py-12 flex-[0.6]">
       <div className="my-8">
-        <div className="space-y-6">
+        <div className="flex flex-col gap-y-2">
           {entries.length === 0 ? (
             <Text color="dimmed" py="xl">
               아직 작성된 방명록이 없습니다. 첫 번째 방명록을 작성해보세요!
@@ -179,11 +191,18 @@ export const CommentListWidget = () => {
           ) : (
             entries.map((entry) => (
               <Paper
+                styles={{
+                  // Ref. CommentInputWidget.tsx:175
+                  root: {
+                    backgroundColor: 'rgba(17, 24, 39, 0.2)',
+                    backdropFilter: 'blur(0.25rem)',
+                  },
+                }}
                 key={entry._id}
                 shadow="xs"
                 radius="md"
                 p="md"
-                className="border border-gray-200 hover:shadow-md transition-shadow"
+                className="border border-gray-500 hover:border-gray-300 transition-all duration-200"
               >
                 <div className="flex justify-between items-start">
                   <div>
