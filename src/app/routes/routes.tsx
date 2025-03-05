@@ -1,9 +1,12 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { RootLayout } from './layout';
 import Intro from 'src/pages/Intro';
+import { CommentPage } from '@/pages/Comment';
+
+export type Path = '/' | '/projects' | '/comment';
 
 interface Route {
-  path: string;
+  path: Path;
   label: string;
   element: React.ReactElement;
 }
@@ -20,9 +23,9 @@ export const routes: Route[] = [
     element: <Intro />,
   },
   {
-    path: '/comments',
-    label: 'Comments',
-    element: <Intro />,
+    path: '/comment',
+    label: 'Comment',
+    element: <CommentPage />,
   },
 ];
 

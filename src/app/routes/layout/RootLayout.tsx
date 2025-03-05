@@ -14,7 +14,7 @@ export const RootLayout = () => (
     </div>
     {/* Header 자리 */}
     <SharedHeader />
-    <div className="px-6 w-full z-[1]">
+    <div className="px-6 w-full z-[1] h-[100vh - 52px]">
       <Outlet />
     </div>
   </div>

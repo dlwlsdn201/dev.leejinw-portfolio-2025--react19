@@ -1,3 +1,5 @@
+export const CARD_BACKGROUND = 'bg-gray-900/20 backdrop-blur-sm';
+
 export enum TEXT_SIZE_CONFIG {
   SMALL = 'text-[1rem]',
   MEDIUM = 'text-[1.5rem]',

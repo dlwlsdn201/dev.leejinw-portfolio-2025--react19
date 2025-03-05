@@ -1,6 +1,5 @@
-import { PADDING_CONFIG } from '@/app/config/style';
+import { CARD_BACKGROUND, PADDING_CONFIG } from '@app/config/style';
 import React from 'react';
-import { cardBackgroundStyle } from '@widgets/intro/config/style';
 import { Tooltip } from '@mantine/core';
 
 // types.ts
@@ -31,7 +30,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
     <div
       data-aos={aosAnimation}
       data-aos-delay={index * 200}
-      className={`group relative overflow-hidden rounded-xl ${cardBackgroundStyle} cursor-pointer`}
+      className={`group relative overflow-hidden rounded-xl ${CARD_BACKGROUND} cursor-pointer`}
       onClick={() => goToProjectUrl(project.link)}
     >
       <div className="w-full">
