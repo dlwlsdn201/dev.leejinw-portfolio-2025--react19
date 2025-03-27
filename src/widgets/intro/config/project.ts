@@ -1,4 +1,4 @@
-import { SkillsIconProvider } from '@shared/assets/icon/skills';
+import { skillsIconProvider } from '@shared/assets/icon/skills';
 import Project_1_Image from '@shared/assets/image/project_sample.jpeg';
 import Project_1 from '@shared/assets/image/Project_1.gif';
 
@@ -10,7 +10,7 @@ export const PROJECT_CONFIG = [
       'React 18, TypeScript 환경을 기반으로 개발한 영화 Top 10 랭킹 정보 제공 웹 서비스입니다.',
     imageSrc: Project_1,
     category: 'FrontEnd',
-    skills: SkillsIconProvider([
+    skills: skillsIconProvider([
       'typescript',
       'react',
       'tanstack/react-query',
@@ -25,7 +25,7 @@ export const PROJECT_CONFIG = [
     description: '(작업 중)',
     imageSrc: Project_1_Image,
     category: '(작업 중)',
-    skills: SkillsIconProvider([
+    skills: skillsIconProvider([
       'javascript',
       'react',
       'styledComponents',
@@ -39,7 +39,7 @@ export const PROJECT_CONFIG = [
     description: '(작업 중)',
     imageSrc: Project_1_Image,
     category: '(작업 중)',
-    skills: SkillsIconProvider([
+    skills: skillsIconProvider([
       'typescript',
       'react',
       'styledComponents',
@@ -53,7 +53,7 @@ export const PROJECT_CONFIG = [
     description: '(작업 중)',
     imageSrc: Project_1_Image,
     category: '(작업 중)',
-    skills: SkillsIconProvider([
+    skills: skillsIconProvider([
       'typescript',
       'react',
       'styledComponents',
@@ -67,7 +67,7 @@ export const PROJECT_CONFIG = [
     description: '(작업 중)',
     imageSrc: Project_1_Image,
     category: '(작업 중)',
-    skills: SkillsIconProvider([
+    skills: skillsIconProvider([
       'typescript',
       'nextjs',
       'tailwindCss',
@@ -81,7 +81,7 @@ export const PROJECT_CONFIG = [
     description: '(작업 중)',
     imageSrc: Project_1_Image,
     category: '(작업 중)',
-    skills: SkillsIconProvider(['nextjs', 'styledComponents']),
+    skills: skillsIconProvider(['nextjs', 'styledComponents']),
     link: '#',
   },
 ];

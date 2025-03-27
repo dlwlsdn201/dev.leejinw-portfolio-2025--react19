@@ -1,20 +1,17 @@
 // GuestBook.tsx
 import { useState, useEffect } from 'react';
 import {
-  TextInput,
-  Textarea,
   Button,
   Paper,
-  Title,
   Text,
   Group,
-  Stack,
   PasswordInput,
   Modal,
   ActionIcon,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';
+import { toolsIconProvider } from '@/shared/assets/icon/tools';
 
 interface GuestbookEntry {
   _id: string;
@@ -180,12 +177,16 @@ export const CommentListWidget = () => {
     });
   };
 
+  const deleteIcon = toolsIconProvider({ keys: ['delete'] }).map(
+    (iconObj) => iconObj.icon
+  );
+
   return (
     <div className="w-full py-12 flex-[0.6]">
       <div className="my-8">
         <div className="flex flex-col gap-y-2">
           {entries.length === 0 ? (
-            <Text color="dimmed" py="xl">
+            <Text c="dimmed" py="xl">
               아직 작성된 방명록이 없습니다. 첫 번째 방명록을 작성해보세요!
             </Text>
           ) : (
@@ -208,7 +209,7 @@ export const CommentListWidget = () => {
                   <div>
                     <Group>
                       <Text className="text-gray-800">{entry.author}</Text>
-                      <Text size="sm" color="dimmed">
+                      <Text size="sm" c="dimmed">
                         {formatDate(entry.createdAt)}
                       </Text>
                     </Group>
@@ -222,8 +223,7 @@ export const CommentListWidget = () => {
                     onClick={() => handleOpenDeleteModal(entry._id)}
                     className="hover:bg-red-50"
                   >
-                    액션 아이콘
-                    {/* <IconTrash size={18} /> */}
+                    {...deleteIcon}
                   </ActionIcon>
                 </div>
               </Paper>
@@ -243,7 +243,7 @@ export const CommentListWidget = () => {
             onChange={(e) => setDeletePassword(e.target.value)}
             mb="md"
           />
-          <Group>
+          <Group justify="flex-end">
             <Button variant="outline" onClick={close}>
               취소
             </Button>

@@ -58,6 +58,6 @@ const iconMaps: {
   mantineUI: { name: 'mantine UI', icon: SiMantineIcon },
 };
 
-export const SkillsIconProvider = (skillKeys: Skills[]) => {
+export const skillsIconProvider = (skillKeys: Skills[]) => {
   return skillKeys.map((key) => iconMaps[key]);
 };
