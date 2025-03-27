@@ -1,40 +1,24 @@
 // GuestBook.tsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import {
   TextInput,
   Textarea,
   Button,
   Paper,
   Title,
-  Text,
-  Group,
   Stack,
   PasswordInput,
-  Modal,
-  ActionIcon,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';
-import { CARD_BACKGROUND } from '@app/config/style';
-
-interface GuestbookEntry {
-  _id: string;
-  author: string;
-  content: string;
-  createdAt: string;
-}
-
-const TEST_ENTRIES: GuestbookEntry[] = [
-  {
-    _id: '1',
-    author: '홍길동',
-    content: '안녕하세요. 홍길동입니다.',
-    createdAt: '2021-09-01T12:00:00',
-  },
-];
+import {
+  GuestbookComment,
+  NewGuestbookComment,
+} from '@features/comment/model/comment';
+import dayjs from 'dayjs';
+import { useCommentStore } from './store/useCommentStore';
 
 export const CommentInputWidget = () => {
-  const [entries, setEntries] = useState<GuestbookEntry[]>(TEST_ENTRIES);
   const [author, setAuthor] = useState('');
   const [password, setPassword] = useState('');
   const [content, setContent] = useState('');
@@ -43,11 +27,13 @@ export const CommentInputWidget = () => {
   const [deletePassword, setDeletePassword] = useState('');
   const [opened, { open, close }] = useDisclosure(false);
 
-  const fetchEntries = async () => {
+  const { initComment, addComment } = useCommentStore();
+
+  const reFetchEntries = async () => {
     try {
       const response = await fetch('/api/guestbook');
       const data = await response.json();
-      setEntries(data);
+      initComment(data);
     } catch (error) {
       notifications.show({
         title: '오류',
@@ -57,11 +43,11 @@ export const CommentInputWidget = () => {
     }
   };
 
-  useEffect(() => {
-    fetchEntries();
-  }, []);
+  const SAMPLE_AddComment = (comment: NewGuestbookComment) => {
+    addComment(comment);
+  };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!author.trim() || !content.trim() || !password.trim()) {
@@ -73,30 +59,38 @@ export const CommentInputWidget = () => {
       return;
     }
 
+    // FormData를 객체로 변환
+    const formValues = {
+      author,
+      password,
+      content,
+    };
+
     setLoading(true);
     try {
-      const response = await fetch('/api/guestbook', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ author, password, content }),
-      });
-
-      if (response.ok) {
-        setAuthor('');
-        setPassword('');
-        setContent('');
-        fetchEntries();
-        notifications.show({
-          title: '성공',
-          message: '방명록이 등록되었습니다.',
-          color: 'green',
-        });
-      } else {
-        const error = await response.json();
-        throw new Error(error.message || '방명록 등록에 실패했습니다.');
-      }
+      SAMPLE_AddComment(formValues);
+      // TODO - [추후 API 연동 필요] */
+      // const response = await fetch('/api/guestbook', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ author, password, content }),
+      // });
+      // if (response.ok) {
+      //   setAuthor('');
+      //   setPassword('');
+      //   setContent('');
+      //   reFetchEntries();
+      //   notifications.show({
+      //     title: '성공',
+      //     message: '방명록이 등록되었습니다.',
+      //     color: 'green',
+      //   });
+      // } else {
+      //   const error = await response.json();
+      //   throw new Error(error.message || '방명록 등록에 실패했습니다.');
+      // }
     } catch (error) {
       if (error instanceof Error) {
         notifications.show({
@@ -137,7 +131,7 @@ export const CommentInputWidget = () => {
 
       if (response.ok) {
         close();
-        fetchEntries();
+        reFetchEntries();
         notifications.show({
           title: '성공',
           message: '방명록이 삭제되었습니다.',
@@ -208,23 +202,22 @@ export const CommentInputWidget = () => {
             <Textarea
               label="내용"
               placeholder="방명록 내용을 입력하세요"
-              minRows={4}
-              maxRows={8}
+              minRows={1}
+              maxRows={10}
+              size="md"
               value={content}
               onChange={(e) => setContent(e.target.value)}
               required
               className="w-full"
             />
-            <Group>
-              <Button
-                type="submit"
-                loading={loading}
-                // leftIcon={<IconSend size={16} />}
-                className="bg-blue-600 hover:bg-blue-700 transition-colors"
-              >
-                등록하기
-              </Button>
-            </Group>
+            <Button
+              type="submit"
+              loading={loading}
+              // leftIcon={<IconSend size={16} />}
+              className="w-full bg-blue-600 hover:bg-blue-700 transition-colors"
+            >
+              등록하기
+            </Button>
           </Stack>
         </form>
       </Paper>
