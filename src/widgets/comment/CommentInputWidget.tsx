@@ -11,12 +11,9 @@ import {
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';
-import {
-  GuestbookComment,
-  NewGuestbookComment,
-} from '@features/comment/model/comment';
-import dayjs from 'dayjs';
+import { NewGuestbookComment } from '@features/comment/model/comment';
 import { useCommentStore } from './store/useCommentStore';
+import { InputItem } from './component/InputItem';
 
 export const CommentInputWidget = () => {
   const [author, setAuthor] = useState('');
@@ -174,42 +171,58 @@ export const CommentInputWidget = () => {
         }}
         radius="md"
         p="xl"
-        className="h-[100%] "
+        className="h-[100%] border border-gray-500"
       >
         <form onSubmit={handleSubmit}>
           <Stack>
             <Title order={3} className="">
               작성하기
             </Title>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <TextInput
-                label="작성자명"
-                placeholder="이름을 입력하세요"
-                value={author}
-                onChange={(e) => setAuthor(e.target.value)}
-                required
-                className="w-full"
+            <div className="flex flex-col gap-y-4 justify-start">
+              <InputItem
+                label="작성자"
+                isRequired={true}
+                inputElement={
+                  <TextInput
+                    placeholder="이름을 입력하세요"
+                    value={author}
+                    onChange={(e) => setAuthor(e.target.value)}
+                    required
+                    className="w-full"
+                  />
+                }
               />
-              <PasswordInput
+              <InputItem
                 label="비밀번호"
-                placeholder="삭제 시 필요한 비밀번호"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full"
+                isRequired={true}
+                inputElement={
+                  <PasswordInput
+                    placeholder="삭제 시 필요한 비밀번호 (영소문자/숫자)"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="w-full"
+                  />
+                }
+              />
+              <InputItem
+                label="내용"
+                isRequired={true}
+                inputElement={
+                  <Textarea
+                    placeholder="방명록 내용을 입력하세요"
+                    minRows={1}
+                    maxRows={10}
+                    size="md"
+                    resize="block"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    required
+                    className="w-full"
+                  />
+                }
               />
             </div>
-            <Textarea
-              label="내용"
-              placeholder="방명록 내용을 입력하세요"
-              minRows={1}
-              maxRows={10}
-              size="md"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              required
-              className="w-full"
-            />
             <Button
               type="submit"
               loading={loading}
