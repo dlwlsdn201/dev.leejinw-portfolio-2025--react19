@@ -36,9 +36,9 @@ const TEST_ENTRIES: GuestbookComment[] = [
 ];
 
 export const CommentListWidget = () => {
-  const [author, setAuthor] = useState('');
-  const [password, setPassword] = useState('');
-  const [content, setContent] = useState('');
+  // const [author, setAuthor] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [content, setContent] = useState('');
   // const [loading, setLoading] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deletePassword, setDeletePassword] = useState('');
