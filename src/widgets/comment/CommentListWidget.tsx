@@ -8,7 +8,7 @@ import {
   PasswordInput,
   Modal,
   ActionIcon,
-  Notification,
+  // Notification,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { GuestbookComment } from '@features/comment/model/comment';
@@ -39,7 +39,7 @@ export const CommentListWidget = () => {
   const [author, setAuthor] = useState('');
   const [password, setPassword] = useState('');
   const [content, setContent] = useState('');
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deletePassword, setDeletePassword] = useState('');
   const [opened, { open, close }] = useDisclosure(false);
@@ -67,54 +67,54 @@ export const CommentListWidget = () => {
     fetchEntries();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
 
-    if (!author.trim() || !content.trim() || !password.trim()) {
-      notifications.show({
-        title: '입력 오류',
-        message: '모든 필드를 입력해주세요.',
-        color: 'red',
-      });
-      return;
-    }
+  //   if (!author.trim() || !content.trim() || !password.trim()) {
+  //     notifications.show({
+  //       title: '입력 오류',
+  //       message: '모든 필드를 입력해주세요.',
+  //       color: 'red',
+  //     });
+  //     return;
+  //   }
 
-    setLoading(true);
-    try {
-      const response = await fetch('/api/guestbook', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ author, password, content }),
-      });
+  //   // setLoading(true);
+  //   try {
+  //     const response = await fetch('/api/guestbook', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ author, password, content }),
+  //     });
 
-      if (response.ok) {
-        setAuthor('');
-        setPassword('');
-        setContent('');
-        fetchEntries();
-        notifications.show({
-          title: '성공',
-          message: '방명록이 등록되었습니다.',
-          color: 'green',
-        });
-      } else {
-        const error = await response.json();
-        throw new Error(error.message || '방명록 등록에 실패했습니다.');
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        notifications.show({
-          title: '오류',
-          message: error.message,
-          color: 'red',
-        });
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     if (response.ok) {
+  //       setAuthor('');
+  //       setPassword('');
+  //       setContent('');
+  //       fetchEntries();
+  //       notifications.show({
+  //         title: '성공',
+  //         message: '방명록이 등록되었습니다.',
+  //         color: 'green',
+  //       });
+  //     } else {
+  //       const error = await response.json();
+  //       throw new Error(error.message || '방명록 등록에 실패했습니다.');
+  //     }
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       notifications.show({
+  //         title: '오류',
+  //         message: error.message,
+  //         color: 'red',
+  //       });
+  //     }
+  //   } finally {
+  //     // setLoading(false);
+  //   }
+  // };
 
   const handleOpenDeleteModal = (id: string) => {
     setDeleteId(id);
