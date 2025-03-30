@@ -1,52 +1,50 @@
 // GuestBook.tsx
 import { useState, useEffect } from 'react';
 import {
-  TextInput,
-  Textarea,
   Button,
   Paper,
-  Title,
   Text,
   Group,
-  Stack,
   PasswordInput,
   Modal,
   ActionIcon,
+  // Notification,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
+import { GuestbookComment } from '@features/comment/model/comment';
 import { useDisclosure } from '@mantine/hooks';
+import { toolsIconProvider } from '@/shared/assets/icon/tools';
+import dayjs from 'dayjs';
+import { useCommentStore } from './store/useCommentStore';
+import { DefaultNotification } from '@/shared/ui/Notification';
 
-interface GuestbookEntry {
-  _id: string;
-  author: string;
-  content: string;
-  createdAt: string;
-}
-
-const TEST_ENTRIES: GuestbookEntry[] = [
+const TEST_ENTRIES: GuestbookComment[] = [
   {
-    _id: '1',
+    id: '1',
     author: '홍길동',
+    password: '1234',
     content: '안녕하세요. 홍길동입니다.',
-    createdAt: '2021-09-01T12:00:00',
+    createdAt: dayjs().valueOf(),
   },
   {
-    _id: '2',
+    id: '2',
     author: '김미리',
+    password: '1234',
     content: '안녕하세요. 김미리입니다.',
-    createdAt: '2021-10-01T12:00:00',
+    createdAt: dayjs().valueOf(),
   },
 ];
 
 export const CommentListWidget = () => {
-  const [entries, setEntries] = useState<GuestbookEntry[]>([]);
-  const [author, setAuthor] = useState('');
-  const [password, setPassword] = useState('');
-  const [content, setContent] = useState('');
-  const [loading, setLoading] = useState(false);
+  // const [author, setAuthor] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [content, setContent] = useState('');
+  // const [loading, setLoading] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deletePassword, setDeletePassword] = useState('');
   const [opened, { open, close }] = useDisclosure(false);
+
+  const { comments, initComment, removeComment } = useCommentStore();
 
   const fetchEntries = async () => {
     try {
@@ -54,11 +52,8 @@ export const CommentListWidget = () => {
       // const data = await response.json();
       const DATA = TEST_ENTRIES;
       /* TODO -[추후 lib 핸들러 함수로 리팩터링] */
-      const sortedDataByDate = DATA.sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      );
-      setEntries(sortedDataByDate);
+      const sortedDataByDate = DATA.sort((a, b) => b.createdAt - a.createdAt);
+      initComment(sortedDataByDate);
     } catch (error) {
       notifications.show({
         title: '오류',
@@ -72,54 +67,54 @@ export const CommentListWidget = () => {
     fetchEntries();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
 
-    if (!author.trim() || !content.trim() || !password.trim()) {
-      notifications.show({
-        title: '입력 오류',
-        message: '모든 필드를 입력해주세요.',
-        color: 'red',
-      });
-      return;
-    }
+  //   if (!author.trim() || !content.trim() || !password.trim()) {
+  //     notifications.show({
+  //       title: '입력 오류',
+  //       message: '모든 필드를 입력해주세요.',
+  //       color: 'red',
+  //     });
+  //     return;
+  //   }
 
-    setLoading(true);
-    try {
-      const response = await fetch('/api/guestbook', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ author, password, content }),
-      });
+  //   // setLoading(true);
+  //   try {
+  //     const response = await fetch('/api/guestbook', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ author, password, content }),
+  //     });
 
-      if (response.ok) {
-        setAuthor('');
-        setPassword('');
-        setContent('');
-        fetchEntries();
-        notifications.show({
-          title: '성공',
-          message: '방명록이 등록되었습니다.',
-          color: 'green',
-        });
-      } else {
-        const error = await response.json();
-        throw new Error(error.message || '방명록 등록에 실패했습니다.');
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        notifications.show({
-          title: '오류',
-          message: error.message,
-          color: 'red',
-        });
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     if (response.ok) {
+  //       setAuthor('');
+  //       setPassword('');
+  //       setContent('');
+  //       fetchEntries();
+  //       notifications.show({
+  //         title: '성공',
+  //         message: '방명록이 등록되었습니다.',
+  //         color: 'green',
+  //       });
+  //     } else {
+  //       const error = await response.json();
+  //       throw new Error(error.message || '방명록 등록에 실패했습니다.');
+  //     }
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       notifications.show({
+  //         title: '오류',
+  //         message: error.message,
+  //         color: 'red',
+  //       });
+  //     }
+  //   } finally {
+  //     // setLoading(false);
+  //   }
+  // };
 
   const handleOpenDeleteModal = (id: string) => {
     setDeleteId(id);
@@ -138,26 +133,36 @@ export const CommentListWidget = () => {
     }
 
     try {
-      const response = await fetch(`/api/guestbook/${deleteId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ password: deletePassword }),
-      });
+      removeComment(deleteId);
+      // TODO - [추후 API 구현 및 연동 필요] */
+      // const response = await fetch(`/api/guestbook/${deleteId}`, {
+      //   method: 'DELETE',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ password: deletePassword }),
+      // });
 
-      if (response.ok) {
-        close();
-        fetchEntries();
-        notifications.show({
-          title: '성공',
-          message: '방명록이 삭제되었습니다.',
-          color: 'green',
-        });
-      } else {
-        const error = await response.json();
-        throw new Error(error.message || '방명록 삭제에 실패했습니다.');
-      }
+      // if (response.ok) {
+      //   close();
+      //   fetchEntries();
+      //   notifications.show({
+      //     title: '성공',
+      //     message: '방명록이 삭제되었습니다.',
+      //     color: 'green',
+      //   });
+      // } else {
+      //   const error = await response.json();
+      //   throw new Error(error.message || '방명록 삭제에 실패했습니다.');
+      // }
+
+      <DefaultNotification
+        title={'삭제 성공'}
+        mode="success"
+        description={'방명록을 성공적으로 삭제하였습니다'}
+      />;
+
+      close();
     } catch (error) {
       if (error instanceof Error) {
         notifications.show({
@@ -169,27 +174,22 @@ export const CommentListWidget = () => {
     }
   };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ko-KR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
+  const formatDateToString = (date: number) => {
+    return dayjs(date).format('YYYY.MM.DD HH:mm:ss');
   };
+
+  const deleteIcon = toolsIconProvider({ keys: ['delete'] })[0].icon;
 
   return (
     <div className="w-full py-12 flex-[0.6]">
       <div className="my-8">
         <div className="flex flex-col gap-y-2">
-          {entries.length === 0 ? (
-            <Text color="dimmed" py="xl">
+          {comments.length === 0 ? (
+            <Text c="dimmed" py="xl">
               아직 작성된 방명록이 없습니다. 첫 번째 방명록을 작성해보세요!
             </Text>
           ) : (
-            entries.map((entry) => (
+            comments.map((comment) => (
               <Paper
                 styles={{
                   // Ref. CommentInputWidget.tsx:175
@@ -198,7 +198,7 @@ export const CommentListWidget = () => {
                     backdropFilter: 'blur(0.25rem)',
                   },
                 }}
-                key={entry._id}
+                key={comment.id}
                 shadow="xs"
                 radius="md"
                 p="md"
@@ -207,23 +207,22 @@ export const CommentListWidget = () => {
                 <div className="flex justify-between items-start">
                   <div>
                     <Group>
-                      <Text className="text-gray-800">{entry.author}</Text>
-                      <Text size="sm" color="dimmed">
-                        {formatDate(entry.createdAt)}
+                      <Text className="text-gray-800">{comment.author}</Text>
+                      <Text size="sm" c="dimmed">
+                        {formatDateToString(comment.createdAt)}
                       </Text>
                     </Group>
                     <Text mt="xs" className="text-gray-700 whitespace-pre-line">
-                      {entry.content}
+                      {comment.content}
                     </Text>
                   </div>
                   <ActionIcon
                     color="red"
                     variant="subtle"
-                    onClick={() => handleOpenDeleteModal(entry._id)}
+                    onClick={() => handleOpenDeleteModal(comment.id)}
                     className="hover:bg-red-50"
                   >
-                    액션 아이콘
-                    {/* <IconTrash size={18} /> */}
+                    {deleteIcon}
                   </ActionIcon>
                 </div>
               </Paper>
@@ -243,11 +242,15 @@ export const CommentListWidget = () => {
             onChange={(e) => setDeletePassword(e.target.value)}
             mb="md"
           />
-          <Group>
+          <Group justify="flex-end">
             <Button variant="outline" onClick={close}>
               취소
             </Button>
-            <Button color="red" onClick={handleDelete}>
+            <Button
+              color="red"
+              onClick={handleDelete}
+              disabled={!deletePassword || deletePassword.length === 0}
+            >
               삭제
             </Button>
           </Group>

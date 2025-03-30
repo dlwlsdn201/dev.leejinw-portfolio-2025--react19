@@ -1,53 +1,35 @@
 // GuestBook.tsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import {
   TextInput,
   Textarea,
   Button,
   Paper,
   Title,
-  Text,
-  Group,
-  Stack,
   PasswordInput,
-  Modal,
-  ActionIcon,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
-import { useDisclosure } from '@mantine/hooks';
-import { CARD_BACKGROUND } from '@app/config/style';
-
-interface GuestbookEntry {
-  _id: string;
-  author: string;
-  content: string;
-  createdAt: string;
-}
-
-const TEST_ENTRIES: GuestbookEntry[] = [
-  {
-    _id: '1',
-    author: '홍길동',
-    content: '안녕하세요. 홍길동입니다.',
-    createdAt: '2021-09-01T12:00:00',
-  },
-];
+// import { useDisclosure } from '@mantine/hooks';
+import { NewGuestbookComment } from '@features/comment/model/comment';
+import { useCommentStore } from './store/useCommentStore';
+import { InputItem } from './component/InputItem';
 
 export const CommentInputWidget = () => {
-  const [entries, setEntries] = useState<GuestbookEntry[]>(TEST_ENTRIES);
   const [author, setAuthor] = useState('');
   const [password, setPassword] = useState('');
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
-  const [deletePassword, setDeletePassword] = useState('');
-  const [opened, { open, close }] = useDisclosure(false);
+  // const [deleteId, setDeleteId] = useState<string | null>(null);
+  // const [deletePassword, setDeletePassword] = useState('');
+  // const [{ open, close }] = useDisclosure(false);
+
+  const { initComment, addComment } = useCommentStore();
 
   const fetchEntries = async () => {
     try {
       const response = await fetch('/api/guestbook');
       const data = await response.json();
-      setEntries(data);
+      initComment(data);
     } catch (error) {
       notifications.show({
         title: '오류',
@@ -57,11 +39,11 @@ export const CommentInputWidget = () => {
     }
   };
 
-  useEffect(() => {
-    fetchEntries();
-  }, []);
+  const SAMPLE_AddComment = (comment: NewGuestbookComment) => {
+    addComment(comment);
+  };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!author.trim() || !content.trim() || !password.trim()) {
@@ -73,30 +55,38 @@ export const CommentInputWidget = () => {
       return;
     }
 
+    // FormData를 객체로 변환
+    const formValues = {
+      author,
+      password,
+      content,
+    };
+
     setLoading(true);
     try {
-      const response = await fetch('/api/guestbook', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ author, password, content }),
-      });
-
-      if (response.ok) {
-        setAuthor('');
-        setPassword('');
-        setContent('');
-        fetchEntries();
-        notifications.show({
-          title: '성공',
-          message: '방명록이 등록되었습니다.',
-          color: 'green',
-        });
-      } else {
-        const error = await response.json();
-        throw new Error(error.message || '방명록 등록에 실패했습니다.');
-      }
+      SAMPLE_AddComment(formValues);
+      // TODO - [추후 API 연동 필요] */
+      // const response = await fetch('/api/guestbook', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ author, password, content }),
+      // });
+      // if (response.ok) {
+      //   setAuthor('');
+      //   setPassword('');
+      //   setContent('');
+      //   fetchEntries();
+      //   notifications.show({
+      //     title: '성공',
+      //     message: '방명록이 등록되었습니다.',
+      //     color: 'green',
+      //   });
+      // } else {
+      //   const error = await response.json();
+      //   throw new Error(error.message || '방명록 등록에 실패했습니다.');
+      // }
     } catch (error) {
       if (error instanceof Error) {
         notifications.show({
@@ -110,64 +100,69 @@ export const CommentInputWidget = () => {
     }
   };
 
-  const handleOpenDeleteModal = (id: string) => {
-    setDeleteId(id);
-    setDeletePassword('');
-    open();
-  };
+  // const handleOpenDeleteModal = (id: string) => {
+  //   setDeleteId(id);
+  //   setDeletePassword('');
+  //   open();
+  // };
 
-  const handleDelete = async () => {
-    if (!deleteId || !deletePassword.trim()) {
-      notifications.show({
-        title: '입력 오류',
-        message: '비밀번호를 입력해주세요.',
-        color: 'red',
-      });
-      return;
-    }
+  // const handleDelete = async () => {
+  //   if (!deleteId || !deletePassword.trim()) {
+  //     notifications.show({
+  //       title: '입력 오류',
+  //       message: '비밀번호를 입력해주세요.',
+  //       color: 'red',
+  //     });
+  //     return;
+  //   }
 
-    try {
-      const response = await fetch(`/api/guestbook/${deleteId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ password: deletePassword }),
-      });
+  //   try {
+  //     const response = await fetch(`/api/guestbook/${deleteId}`, {
+  //       method: 'DELETE',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ password: deletePassword }),
+  //     });
 
-      if (response.ok) {
-        close();
-        fetchEntries();
-        notifications.show({
-          title: '성공',
-          message: '방명록이 삭제되었습니다.',
-          color: 'green',
-        });
-      } else {
-        const error = await response.json();
-        throw new Error(error.message || '방명록 삭제에 실패했습니다.');
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        notifications.show({
-          title: '오류',
-          message: error.message,
-          color: 'red',
-        });
-      }
-    }
-  };
+  //     if (response.ok) {
+  //       close();
+  //       fetchEntries();
+  //       notifications.show({
+  //         title: '성공',
+  //         message: '방명록이 삭제되었습니다.',
+  //         color: 'green',
+  //       });
+  //     } else {
+  //       const error = await response.json();
+  //       throw new Error(error.message || '방명록 삭제에 실패했습니다.');
+  //     }
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       notifications.show({
+  //         title: '오류',
+  //         message: error.message,
+  //         color: 'red',
+  //       });
+  //     }
+  //   }
+  // };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ko-KR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
+  // const formatDate = (dateString: string) => {
+  //   const date = new Date(dateString);
+  //   return date.toLocaleDateString('ko-KR', {
+  //     year: 'numeric',
+  //     month: 'long',
+  //     day: 'numeric',
+  //     hour: '2-digit',
+  //     minute: '2-digit',
+  //   });
+  // };
+
+  // Init
+  useEffect(() => {
+    fetchEntries();
+  }, []);
 
   return (
     <div className="w-full py-12 flex-[0.4] h-[80vh]">
@@ -180,52 +175,64 @@ export const CommentInputWidget = () => {
         }}
         radius="md"
         p="xl"
-        className="h-[100%] "
+        className="h-[100%] border border-gray-500"
       >
-        <form onSubmit={handleSubmit}>
-          <Stack>
-            <Title order={3} className="">
-              작성하기
-            </Title>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <TextInput
-                label="작성자명"
-                placeholder="이름을 입력하세요"
-                value={author}
-                onChange={(e) => setAuthor(e.target.value)}
-                required
-                className="w-full"
-              />
-              <PasswordInput
-                label="비밀번호"
-                placeholder="삭제 시 필요한 비밀번호"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full"
-              />
-            </div>
-            <Textarea
-              label="내용"
-              placeholder="방명록 내용을 입력하세요"
-              minRows={4}
-              maxRows={8}
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              required
-              className="w-full"
+        <form onSubmit={handleSubmit} className="h-full flex flex-col gap-y-6">
+          <Title order={3}>작성하기</Title>
+          <div className="h-full flex flex-col gap-y-4 justify-start flex-1">
+            <InputItem
+              label="작성자"
+              isRequired={true}
+              inputElement={
+                <TextInput
+                  placeholder="이름을 입력하세요"
+                  value={author}
+                  onChange={(e) => setAuthor(e.target.value)}
+                  required
+                  className="w-full"
+                />
+              }
             />
-            <Group>
-              <Button
-                type="submit"
-                loading={loading}
-                // leftIcon={<IconSend size={16} />}
-                className="bg-blue-600 hover:bg-blue-700 transition-colors"
-              >
-                등록하기
-              </Button>
-            </Group>
-          </Stack>
+            <InputItem
+              label="비밀번호"
+              isRequired={true}
+              inputElement={
+                <PasswordInput
+                  placeholder="삭제 시 필요한 비밀번호 (영소문자/숫자)"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="w-full"
+                />
+              }
+            />
+            <InputItem
+              label="내용"
+              isRequired={true}
+              inputElement={
+                <Textarea
+                  placeholder="방명록 내용을 입력하세요"
+                  minRows={1}
+                  maxRows={10}
+                  size="md"
+                  resize="block"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  required
+                  className="w-full"
+                />
+              }
+            />
+            <Button
+              type="submit"
+              loading={loading}
+              disabled={!author || !password || !content}
+              size="lg"
+              className="mt-auto! cursor-pointer!"
+            >
+              등록하기
+            </Button>
+          </div>
         </form>
       </Paper>
     </div>

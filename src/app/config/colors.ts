@@ -1,4 +1,4 @@
-export const colorPalette = {
+export const COLOR_THEME = {
   light: {
     // UI
     background: '#F4F6F9', // 부드러운 회색빛 화이트
@@ -14,6 +14,7 @@ export const colorPalette = {
     'dark-headline': '#E5E7EB', // 밝은 회색 화이트
     'dark-body': '#D1D5DB', // 중간 밝기 그레이
     'dark-subtitle': '#9CA3AF', // 연한 회색
+    danger: '#EF4444',
     accent: {
       success: '#22C55E', // 밝은 녹색
       warning: '#F59E0B', // 따뜻한 황색
@@ -34,11 +35,11 @@ export const colorPalette = {
 export const tailwindThemeConfig = {
   extend: {
     colors: {
-      ...colorPalette,
+      ...COLOR_THEME,
     },
     backgroundImage: {
-      'hero-gradient': colorPalette.gradients.heroSection,
-      'card-gradient': colorPalette.gradients.projectCard,
+      'hero-gradient': COLOR_THEME.gradients.heroSection,
+      'card-gradient': COLOR_THEME.gradients.projectCard,
     },
   },
 };

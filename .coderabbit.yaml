@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
-language: 'kr'
+language: 'ko-KR'
 early_access: false
 reviews:
   profile: 'chill'
