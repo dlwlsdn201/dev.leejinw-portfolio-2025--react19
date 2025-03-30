@@ -246,7 +246,11 @@ export const CommentListWidget = () => {
             <Button variant="outline" onClick={close}>
               취소
             </Button>
-            <Button color="red" onClick={handleDelete}>
+            <Button
+              color="red"
+              onClick={handleDelete}
+              disabled={!deletePassword || deletePassword.length === 0}
+            >
               삭제
             </Button>
           </Group>
