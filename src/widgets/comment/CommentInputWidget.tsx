@@ -6,7 +6,6 @@ import {
   Button,
   Paper,
   Title,
-  Stack,
   PasswordInput,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
@@ -26,7 +25,7 @@ export const CommentInputWidget = () => {
 
   const { initComment, addComment } = useCommentStore();
 
-  const reFetchEntries = async () => {
+  const fetchEntries = async () => {
     try {
       const response = await fetch('/api/guestbook');
       const data = await response.json();
@@ -78,7 +77,7 @@ export const CommentInputWidget = () => {
       //   setAuthor('');
       //   setPassword('');
       //   setContent('');
-      //   reFetchEntries();
+      //   fetchEntries();
       //   notifications.show({
       //     title: '성공',
       //     message: '방명록이 등록되었습니다.',
@@ -128,7 +127,7 @@ export const CommentInputWidget = () => {
 
       if (response.ok) {
         close();
-        reFetchEntries();
+        fetchEntries();
         notifications.show({
           title: '성공',
           message: '방명록이 삭제되었습니다.',
@@ -160,6 +159,11 @@ export const CommentInputWidget = () => {
     });
   };
 
+  // Init
+  useEffect(() => {
+    fetchEntries();
+  }, []);
+
   return (
     <div className="w-full py-12 flex-[0.4] h-[80vh]">
       <Paper
@@ -173,65 +177,62 @@ export const CommentInputWidget = () => {
         p="xl"
         className="h-[100%] border border-gray-500"
       >
-        <form onSubmit={handleSubmit}>
-          <Stack>
-            <Title order={3} className="">
-              작성하기
-            </Title>
-            <div className="flex flex-col gap-y-4 justify-start">
-              <InputItem
-                label="작성자"
-                isRequired={true}
-                inputElement={
-                  <TextInput
-                    placeholder="이름을 입력하세요"
-                    value={author}
-                    onChange={(e) => setAuthor(e.target.value)}
-                    required
-                    className="w-full"
-                  />
-                }
-              />
-              <InputItem
-                label="비밀번호"
-                isRequired={true}
-                inputElement={
-                  <PasswordInput
-                    placeholder="삭제 시 필요한 비밀번호 (영소문자/숫자)"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    className="w-full"
-                  />
-                }
-              />
-              <InputItem
-                label="내용"
-                isRequired={true}
-                inputElement={
-                  <Textarea
-                    placeholder="방명록 내용을 입력하세요"
-                    minRows={1}
-                    maxRows={10}
-                    size="md"
-                    resize="block"
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    required
-                    className="w-full"
-                  />
-                }
-              />
-            </div>
+        <form onSubmit={handleSubmit} className="h-full flex flex-col gap-y-6">
+          <Title order={3}>작성하기</Title>
+          <div className="h-full flex flex-col gap-y-4 justify-start flex-1">
+            <InputItem
+              label="작성자"
+              isRequired={true}
+              inputElement={
+                <TextInput
+                  placeholder="이름을 입력하세요"
+                  value={author}
+                  onChange={(e) => setAuthor(e.target.value)}
+                  required
+                  className="w-full"
+                />
+              }
+            />
+            <InputItem
+              label="비밀번호"
+              isRequired={true}
+              inputElement={
+                <PasswordInput
+                  placeholder="삭제 시 필요한 비밀번호 (영소문자/숫자)"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="w-full"
+                />
+              }
+            />
+            <InputItem
+              label="내용"
+              isRequired={true}
+              inputElement={
+                <Textarea
+                  placeholder="방명록 내용을 입력하세요"
+                  minRows={1}
+                  maxRows={10}
+                  size="md"
+                  resize="block"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  required
+                  className="w-full"
+                />
+              }
+            />
             <Button
               type="submit"
               loading={loading}
-              // leftIcon={<IconSend size={16} />}
-              className="w-full bg-blue-600 hover:bg-blue-700 transition-colors"
+              disabled={!author || !password || !content}
+              size="lg"
+              className="mt-auto! cursor-pointer!"
             >
               등록하기
             </Button>
-          </Stack>
+          </div>
         </form>
       </Paper>
     </div>
