@@ -19,9 +19,9 @@ export const CommentInputWidget = () => {
   const [password, setPassword] = useState('');
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
-  const [deletePassword, setDeletePassword] = useState('');
-  const [opened, { open, close }] = useDisclosure(false);
+  // const [deleteId, setDeleteId] = useState<string | null>(null);
+  // const [deletePassword, setDeletePassword] = useState('');
+  // const [{ open, close }] = useDisclosure(false);
 
   const { initComment, addComment } = useCommentStore();
 
@@ -100,64 +100,64 @@ export const CommentInputWidget = () => {
     }
   };
 
-  const handleOpenDeleteModal = (id: string) => {
-    setDeleteId(id);
-    setDeletePassword('');
-    open();
-  };
+  // const handleOpenDeleteModal = (id: string) => {
+  //   setDeleteId(id);
+  //   setDeletePassword('');
+  //   open();
+  // };
 
-  const handleDelete = async () => {
-    if (!deleteId || !deletePassword.trim()) {
-      notifications.show({
-        title: '입력 오류',
-        message: '비밀번호를 입력해주세요.',
-        color: 'red',
-      });
-      return;
-    }
+  // const handleDelete = async () => {
+  //   if (!deleteId || !deletePassword.trim()) {
+  //     notifications.show({
+  //       title: '입력 오류',
+  //       message: '비밀번호를 입력해주세요.',
+  //       color: 'red',
+  //     });
+  //     return;
+  //   }
 
-    try {
-      const response = await fetch(`/api/guestbook/${deleteId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ password: deletePassword }),
-      });
+  //   try {
+  //     const response = await fetch(`/api/guestbook/${deleteId}`, {
+  //       method: 'DELETE',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ password: deletePassword }),
+  //     });
 
-      if (response.ok) {
-        close();
-        fetchEntries();
-        notifications.show({
-          title: '성공',
-          message: '방명록이 삭제되었습니다.',
-          color: 'green',
-        });
-      } else {
-        const error = await response.json();
-        throw new Error(error.message || '방명록 삭제에 실패했습니다.');
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        notifications.show({
-          title: '오류',
-          message: error.message,
-          color: 'red',
-        });
-      }
-    }
-  };
+  //     if (response.ok) {
+  //       close();
+  //       fetchEntries();
+  //       notifications.show({
+  //         title: '성공',
+  //         message: '방명록이 삭제되었습니다.',
+  //         color: 'green',
+  //       });
+  //     } else {
+  //       const error = await response.json();
+  //       throw new Error(error.message || '방명록 삭제에 실패했습니다.');
+  //     }
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       notifications.show({
+  //         title: '오류',
+  //         message: error.message,
+  //         color: 'red',
+  //       });
+  //     }
+  //   }
+  // };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ko-KR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
+  // const formatDate = (dateString: string) => {
+  //   const date = new Date(dateString);
+  //   return date.toLocaleDateString('ko-KR', {
+  //     year: 'numeric',
+  //     month: 'long',
+  //     day: 'numeric',
+  //     hour: '2-digit',
+  //     minute: '2-digit',
+  //   });
+  // };
 
   // Init
   useEffect(() => {
