@@ -2,11 +2,23 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/app.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node dist/app.js",
+    "dev": "ts-node-dev --respawn src/app.ts",
+    "build": "tsc",
+    "lint": "eslint . --ext .ts",
+    "test": "jest"
   },
-  "keywords": [],
+  "keywords": [
+    "portfolio",
+    "blog",
+    "comments",
+    "nodejs",
+    "express",
+    "typescript",
+    "mongodb"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {

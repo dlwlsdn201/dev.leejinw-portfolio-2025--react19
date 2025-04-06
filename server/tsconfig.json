@@ -9,6 +9,14 @@
 
     /* Bundler mode */
     "baseUrl": "./",
+    "paths": {
+      "controllers/*": ["src/controllers/*"],
+      "models/*": ["src/models/*"],
+      "routes/*": ["src/routes/*"],
+      "config/*": ["src/config/*"],
+      "utils/*": ["src/utils/*"],
+      "middleware/*": ["src/middleware/*"]
+    },
     "moduleResolution": "node", // Node.js 모듈 해석 방식 사용
     "resolveJsonModule": true, // JSON 파일을 import 할 수 있도록 설정
     "isolatedModules": true, // Vite 와 호환되도록 각 파일을 독립된 모듈로 취급
