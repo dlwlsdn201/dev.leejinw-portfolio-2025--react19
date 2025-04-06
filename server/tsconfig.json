@@ -1,6 +1,6 @@
 {
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "extends": ["/tsconfig.base.json"],
     "target": "ES2020", // ECMAScript 타겟 버전을 최신으로 설정
     "lib": ["ES2020", "DOM", "DOM.Iterable"], // DOM과 ES 표준 라이브러리를 포함
     "useDefineForClassFields": true, // 클래스 필드의 동작을 최신 사양에 맞게 설정
