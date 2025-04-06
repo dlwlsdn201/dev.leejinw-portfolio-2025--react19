@@ -1,8 +1,8 @@
 // src/routes/commentRoutes.ts
-import express from 'express';
-import * as commentController from '../controllers/commentController';
+import express, { Router } from 'express';
+import * as commentController from '@controllers/commentController';
 
-const router = express.Router();
+const router: Router = express.Router();
 
 // GET - 모든 댓글 조회
 router.get('/', commentController.getComments);

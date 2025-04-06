@@ -1,5 +1,5 @@
 // src/controllers/commentController.ts
-import { Request, Response } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 import { CommentModel } from '../models/commentModel';
 
 // 모든 방명록 조회
@@ -36,13 +36,17 @@ export const getComment = async (req: Request, res: Response) => {
 };
 
 // 방명록 생성
-export const createComment = async (req: Request, res: Response) => {
+export const createComment: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next
+) => {
   try {
     const { auth, content, password } = req.body;
 
     // 입력 검증
     if (!auth || !content || !password) {
-      return res.status(400).json({ message: 'All fields are required' });
+      res.status(400).json({ message: 'All fields are required' });
     }
 
     const newComment = new CommentModel({
@@ -65,76 +69,90 @@ export const createComment = async (req: Request, res: Response) => {
     res.status(201).json(responseComment);
   } catch (error) {
     console.error('Error creating comment:', error);
-    res.status(500).json({ message: 'Failed to create comment' });
+    // res.status(500).json({ message: 'Failed to create comment' });
+
+    next(error); // 에러 핸들링 미들웨어로 전달
   }
 };
 
 // 방명록 수정
-export const updateComment = async (req: Request, res: Response) => {
+export const updateComment: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next
+) => {
   try {
     const { content, password } = req.body;
 
     // 입력 검증
     if (!content || !password) {
-      return res
-        .status(400)
-        .json({ message: 'Content and password are required' });
+      res.status(400).json({ message: 'Content and password are required' });
     }
 
     // 해당 ID의 댓글 찾기
     const comment = await CommentModel.findById(req.params.id);
 
     if (!comment) {
-      return res.status(404).json({ message: 'Comment not found' });
+      res.status(404).json({ message: 'Comment not found' });
     }
 
     // 비밀번호 검증
-    const isPasswordValid = await comment.comparePassword(password);
+    const isPasswordValid = await comment?.comparePassword(password);
 
     if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid password' });
+      res.status(401).json({ message: 'Invalid password' });
     }
 
     // 댓글 내용 업데이트
-    comment.content = content;
-    await comment.save();
+    if (comment) {
+      comment.content = content;
+      await comment?.save();
+    }
 
     res.status(200).json({
       message: 'Comment updated successfully',
-      id: comment._id,
-      name: comment.auth,
-      content: comment.content,
-      createdAt: comment.createdAt,
-      updatedAt: comment.updatedAt,
+      id: comment?._id,
+      name: comment?.auth,
+      content: comment?.content,
+      createdAt: comment?.createdAt,
+      updatedAt: comment?.updatedAt,
     });
   } catch (error) {
     console.error('Error updating comment:', error);
-    res.status(500).json({ message: 'Failed to update comment' });
+    // res.status(500).json({ message: 'Failed to update comment' });
+    next(error); // 에러 핸들링 미들웨어로 전달
   }
 };
 
 // 방명록 삭제
-export const deleteComment = async (req: Request, res: Response) => {
+export const deleteComment: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next
+) => {
   try {
     const { password } = req.body;
 
     // 입력 검증
     if (!password) {
-      return res.status(400).json({ message: 'Password is required' });
+      res.status(400).json({ message: 'Password is required' });
     }
 
     // 해당 ID의 댓글 찾기
     const comment = await CommentModel.findById(req.params.id);
 
     if (!comment) {
-      return res.status(404).json({ message: 'Comment not found' });
+      res.status(404).json({ message: 'Comment not found' });
     }
 
     // 비밀번호 검증
-    const isPasswordValid = await comment.comparePassword(password);
 
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid password' });
+    if (comment) {
+      const isPasswordValid = await comment.comparePassword(password);
+
+      if (!isPasswordValid) {
+        res.status(401).json({ message: 'Invalid password' });
+      }
     }
 
     // 댓글 삭제
@@ -143,6 +161,7 @@ export const deleteComment = async (req: Request, res: Response) => {
     res.status(200).json({ message: 'Comment deleted successfully' });
   } catch (error) {
     console.error('Error deleting comment:', error);
-    res.status(500).json({ message: 'Failed to delete comment' });
+    // res.status(500).json({ message: 'Failed to delete comment' });
+    next(error); // 에러 핸들링 미들웨어로 전달
   }
 };

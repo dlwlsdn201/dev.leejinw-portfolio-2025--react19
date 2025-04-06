@@ -1,9 +1,9 @@
 // src/app.ts
-import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { connectDB } from './config/db';
-import commentRoutes from './routes/commentRoutes';
+import express, { Express } from 'express';
+import { connectDB } from '@config/db';
+import commentRoutes from '@routes/commentRoutes';
 
 // 환경변수 설정
 dotenv.config();
@@ -11,7 +11,7 @@ dotenv.config();
 // 데이터베이스 연결
 connectDB();
 
-const app = express();
+const app: Express = express();
 const PORT = process.env.PORT || 5000;
 
 // 미들웨어
