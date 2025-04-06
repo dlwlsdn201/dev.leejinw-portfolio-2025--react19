@@ -1,1 +1,0 @@
-export { SharedHeader } from './Header';
