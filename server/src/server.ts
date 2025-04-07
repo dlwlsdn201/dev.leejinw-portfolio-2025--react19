@@ -13,6 +13,7 @@ connectDB();
 
 const app: Express = express();
 const PORT = process.env.PORT || 5000;
+const dev = process.env.NODE_ENV !== 'production';
 
 // 미들웨어
 app.use(cors());
@@ -30,7 +31,7 @@ app.get('/', (req, res) => {
 app.use(
   (
     err: any,
-    req: express.Request,
+    _: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) => {
@@ -39,6 +40,8 @@ app.use(
       message: 'Something went wrong!',
       error: process.env.NODE_ENV === 'development' ? err.message : undefined,
     });
+
+    next(err);
   }
 );
 
