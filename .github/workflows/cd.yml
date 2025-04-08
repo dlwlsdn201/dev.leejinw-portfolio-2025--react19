@@ -42,16 +42,19 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm # pnpm 설치
 
-      - name: Install dependencies
-        run: pnpm install # pnpm으로 의존성 설치
+      - name: Install dependencies for client
+        run: cd client && pnpm install # pnpm으로 client 의존성 설치
+
+      - name: Install dependencies for server
+        run: cd server && pnpm install # pnpm으로 server 의존성 설치
 
       - name: Build project
-        run: pnpm run build # pnpm으로 빌드 실행
+        run: pnpm run build:client # pnpm으로 client 빌드 실행
 
       - name: Deploy to S3
         run: |
           echo "Deploying to S3 bucket: $S3_BUCKET_NAME in region $AWS_REGION"
-          aws s3 sync ./dist "s3://$S3_BUCKET_NAME" --delete --region $AWS_REGION
+          aws s3 sync ./client/dist "s3://$S3_BUCKET_NAME" --delete --region $AWS_REGION
 
       - name: Invalidate CloudFront Cache
         run: |
