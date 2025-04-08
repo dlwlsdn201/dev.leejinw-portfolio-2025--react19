@@ -38,19 +38,17 @@ export const getComment = async (req: Request, res: Response) => {
 // 방명록 생성
 export const createComment: RequestHandler = async (
   req: Request,
-  res: Response,
-  next
+  res: Response
 ) => {
   try {
-    const { auth, content, password } = req.body;
-
+    const { author, content, password } = req.body;
     // 입력 검증
-    if (!auth || !content || !password) {
+    if (!author || !content || !password) {
       res.status(400).json({ message: 'All fields are required' });
     }
 
     const newComment = new CommentModel({
-      auth,
+      author,
       content,
       password,
     });
@@ -60,7 +58,7 @@ export const createComment: RequestHandler = async (
     // 비밀번호 제외하고 응답
     const responseComment = {
       id: savedComment._id,
-      auth: savedComment.auth,
+      author: savedComment.author,
       content: savedComment.content,
       createdAt: savedComment.createdAt,
       updatedAt: savedComment.updatedAt,
@@ -69,9 +67,9 @@ export const createComment: RequestHandler = async (
     res.status(201).json(responseComment);
   } catch (error) {
     console.error('Error creating comment:', error);
-    // res.status(500).json({ message: 'Failed to create comment' });
+    res.status(500).json({ message: 'Failed to create comment' });
 
-    next(error); // 에러 핸들링 미들웨어로 전달
+    // next(error); // 에러 핸들링 미들웨어로 전달
   }
 };
 
@@ -112,7 +110,7 @@ export const updateComment: RequestHandler = async (
     res.status(200).json({
       message: 'Comment updated successfully',
       id: comment?._id,
-      name: comment?.auth,
+      author: comment?.author,
       content: comment?.content,
       createdAt: comment?.createdAt,
       updatedAt: comment?.updatedAt,
