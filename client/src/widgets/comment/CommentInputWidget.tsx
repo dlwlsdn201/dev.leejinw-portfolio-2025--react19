@@ -1,4 +1,3 @@
-// GuestBook.tsx
 import { useState, useEffect } from 'react';
 import {
   TextInput,
@@ -15,7 +14,6 @@ import {
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';
-import { CARD_BACKGROUND } from '@app/config/style';
 
 interface GuestbookEntry {
   _id: string;
@@ -45,7 +43,7 @@ export const CommentInputWidget = () => {
 
   const fetchEntries = async () => {
     try {
-      const response = await fetch('/api/guestbook');
+      const response = await fetch('/api/comments');
       const data = await response.json();
       setEntries(data);
     } catch (error) {
@@ -75,11 +73,12 @@ export const CommentInputWidget = () => {
 
     setLoading(true);
     try {
-      const response = await fetch('/api/guestbook', {
+      const response = await fetch('http://localhost:8000/api/comment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ author, password, content }),
       });
 
@@ -219,7 +218,6 @@ export const CommentInputWidget = () => {
               <Button
                 type="submit"
                 loading={loading}
-                // leftIcon={<IconSend size={16} />}
                 className="bg-blue-600 hover:bg-blue-700 transition-colors"
               >
                 등록하기

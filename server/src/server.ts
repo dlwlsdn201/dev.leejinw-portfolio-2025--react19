@@ -12,14 +12,27 @@ dotenv.config();
 connectDB();
 
 const app: Express = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
+const dev = process.env.NODE_ENV !== 'production';
 
 // 미들웨어
-app.use(cors());
+// app.use(cors()); // 기본값: cors() (모든 Origin을 허용하지 않음.)
+app.use(
+  cors({
+    origin: 'http://localhost:3000', // Client 앱의 주소
+    // methods: ['GET', 'POST', 'PUT', 'DELETE'], // 허용할 HTTP 메서드
+    credentials: true, // 쿠키를 포함한 요청을 허용
+  })
+);
 app.use(express.json());
 
 // 라우트
-app.use('/api/comments', commentRoutes);
+app.use('/api', commentRoutes);
+
+app.use('/api', (req, res, next) => {
+  console.log(`[API ROUTE] ${req.method} ${req.originalUrl}`);
+  next();
+});
 
 // 기본 라우트
 app.get('/', (req, res) => {
@@ -30,7 +43,7 @@ app.get('/', (req, res) => {
 app.use(
   (
     err: any,
-    req: express.Request,
+    _: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) => {
@@ -39,6 +52,8 @@ app.use(
       message: 'Something went wrong!',
       error: process.env.NODE_ENV === 'development' ? err.message : undefined,
     });
+
+    next(err);
   }
 );
 

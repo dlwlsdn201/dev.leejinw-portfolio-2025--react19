@@ -23,11 +23,14 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm # pnpm 설치
 
-      - name: Install dependencies
-        run: pnpm install # pnpm으로 의존성 설치
+      - name: Install dependencies for client
+        run: cd client && pnpm install # pnpm으로 의존성 설치
+
+      - name: Install dependencies for server
+        run: cd server && pnpm install # pnpm으로 의존성 설치
 
       - name: Build project
-        run: pnpm run build # pnpm으로 빌드 실행
+        run: pnpm build:client # pnpm으로 빌드 실행
 
   merge-to-main:
     needs: build-test

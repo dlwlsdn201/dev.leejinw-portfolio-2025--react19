@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 
 // Comment Document 인터페이스 정의
 export interface IComment extends Document {
-  auth: string;
+  author: string;
   content: string;
   password: string;
   createdAt: Date;
@@ -15,7 +15,7 @@ export interface IComment extends Document {
 // Comment 스키마 정의
 const commentSchema = new Schema<IComment>(
   {
-    auth: {
+    author: {
       type: String,
       required: [true, '이름은 필수입니다'],
       trim: true,
