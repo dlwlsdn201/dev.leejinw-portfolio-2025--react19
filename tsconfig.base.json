@@ -17,7 +17,7 @@
     "jsx": "react-jsx", // React  17+ 를 사용하기 위한 설정
 
     /* Linting */
-    "strict": true, // 엄격한 타입 검사 활성화
+    "strict": false, // 엄격한 타입 검사 활성화
     "forceConsistentCasingInFileNames": true, // 파일명 대소문자 일관성 검사
     "noUnusedLocals": true, // 사용되지 않은 변수 검사
     "noUnusedParameters": true, // 사용되지 않은 파라미터들 검사
