@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "dev:client": "cd ./client && pnpm dev:3000",
+    "build:client": "cd ./client && pnpm build",
     "dev:server": "cd ./server && pnpm tsx src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
