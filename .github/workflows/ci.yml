@@ -44,8 +44,11 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "JinWoo_Lee"
+          git config --global user.email "dlwlsdn201@naver.com"
+        # run: | commit 잔디가 안 심어져서 주석처리
+        #   git config --global user.name "github-actions[bot]"
+        #   git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Merge feature branch into main
         run: |
