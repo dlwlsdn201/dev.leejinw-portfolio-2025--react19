@@ -118,7 +118,7 @@ export const CommentInputWidget = () => {
 
       if (response.ok) {
         close();
-        fetchEntries();
+        // fetchEntries();
         notifications.show({
           title: '성공',
           message: '방명록이 삭제되었습니다.',
@@ -164,15 +164,16 @@ export const CommentInputWidget = () => {
         className="h-[100%] "
       >
         <form onSubmit={handleSubmit}>
-          <Stack>
+          <Stack gap={30}>
             <Title order={3} className="">
               작성하기
             </Title>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <TextInput
                 label="작성자명"
                 placeholder="이름을 입력하세요"
                 value={author}
+                size="md"
                 onChange={(e) => setAuthor(e.target.value)}
                 required
                 className="w-full"
@@ -181,6 +182,7 @@ export const CommentInputWidget = () => {
                 label="비밀번호"
                 placeholder="삭제 시 필요한 비밀번호"
                 value={password}
+                size="md"
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full"
@@ -192,19 +194,19 @@ export const CommentInputWidget = () => {
               minRows={4}
               maxRows={8}
               value={content}
+              size="md"
               onChange={(e) => setContent(e.target.value)}
               required
               className="w-full"
             />
-            <Group>
-              <Button
-                type="submit"
-                loading={loading}
-                className="bg-blue-600 hover:bg-blue-700 transition-colors"
-              >
-                등록하기
-              </Button>
-            </Group>
+            <Button
+              type="submit"
+              loading={loading}
+              size="md"
+              className="bg-blue-600 hover:bg-blue-700 transition-colors w-full"
+            >
+              등록하기
+            </Button>
           </Stack>
         </form>
       </Paper>
