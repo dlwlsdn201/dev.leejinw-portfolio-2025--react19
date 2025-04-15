@@ -1,14 +1,10 @@
 // GuestBook.tsx
 import { useState, useEffect } from 'react';
 import {
-  TextInput,
-  Textarea,
   Button,
   Paper,
-  Title,
   Text,
   Group,
-  Stack,
   PasswordInput,
   Modal,
   ActionIcon,
@@ -16,6 +12,8 @@ import {
 import { notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';
 import { toolsIconProvider } from '@/shared/assets/icon/tools';
+import { Content } from './component/Content';
+import { IconSize } from '@/app/config/icon';
 
 interface GuestbookEntry {
   _id: string;
@@ -190,7 +188,7 @@ export const CommentListWidget = () => {
   };
 
   const deleteIcon = toolsIconProvider({ keys: ['delete'] }).map(
-    (iconObj) => iconObj.icon
+    ({ IconElement }, idx) => <IconElement key={idx} size={IconSize.SMALL} />
   );
 
   return (
@@ -218,16 +216,14 @@ export const CommentListWidget = () => {
                 className="border border-gray-500 hover:border-gray-300 transition-all duration-200"
               >
                 <div className="flex justify-between items-start">
-                  <div>
+                  <div className="w-full flex flex-col items-start gap-y-2">
                     <Group>
-                      <Text className="text-gray-800">{entry.author}</Text>
+                      <span className="font-bold text-lg">{entry.author}</span>
                       <Text size="sm" c="dimmed">
                         {formatDate(entry.createdAt)}
                       </Text>
                     </Group>
-                    <Text mt="xs" className="text-gray-700 whitespace-pre-line">
-                      {entry.content}
-                    </Text>
+                    <Content>{entry.content}</Content>
                   </div>
                   <ActionIcon
                     c="red"
@@ -236,7 +232,6 @@ export const CommentListWidget = () => {
                     className="hover:bg-red-50"
                   >
                     {...deleteIcon}
-                    {/* <IconTrash size={18} /> */}
                   </ActionIcon>
                 </div>
               </Paper>
