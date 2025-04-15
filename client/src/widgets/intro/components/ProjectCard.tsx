@@ -44,6 +44,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
             <div className="z-10 relative flex gap-2 -translate-y-10 group-hover:translate-y-0 transition-transform duration-300">
               {project.skills.map((item, idx) => (
                 <Tooltip
+                  key={item.name}
                   label={item.name}
                   transitionProps={{ transition: 'pop', duration: 300 }}
                 >

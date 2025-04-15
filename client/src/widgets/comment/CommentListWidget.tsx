@@ -15,6 +15,7 @@ import {
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';
+import { toolsIconProvider } from '@/shared/assets/icon/tools';
 
 interface GuestbookEntry {
   _id: string;
@@ -50,12 +51,17 @@ export const CommentListWidget = () => {
 
   const fetchEntries = async () => {
     try {
-      // const response = await fetch('/api/guestbook');
-      // const data = await response.json();
-      const DATA = TEST_ENTRIES;
+      const response = await fetch('http://localhost:8000/api/comments', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      // const DATA = TEST_ENTRIES;
       /* TODO -[추후 lib 핸들러 함수로 리팩터링] */
-      const sortedDataByDate = DATA.sort(
-        (a, b) =>
+      const sortedDataByDate = data.sort(
+        (a: { createdAt: string }, b: { createdAt: string }) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
       setEntries(sortedDataByDate);
@@ -138,13 +144,16 @@ export const CommentListWidget = () => {
     }
 
     try {
-      const response = await fetch(`/api/guestbook/${deleteId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ password: deletePassword }),
-      });
+      const response = await fetch(
+        `http://localhost:8000/api/comment/${deleteId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ password: deletePassword }),
+        }
+      );
 
       if (response.ok) {
         close();
@@ -180,12 +189,16 @@ export const CommentListWidget = () => {
     });
   };
 
+  const deleteIcon = toolsIconProvider({ keys: ['delete'] }).map(
+    (iconObj) => iconObj.icon
+  );
+
   return (
     <div className="w-full py-12 flex-[0.6]">
       <div className="my-8">
         <div className="flex flex-col gap-y-2">
           {entries.length === 0 ? (
-            <Text color="dimmed" py="xl">
+            <Text c="dimmed" py="xl">
               아직 작성된 방명록이 없습니다. 첫 번째 방명록을 작성해보세요!
             </Text>
           ) : (
@@ -208,7 +221,7 @@ export const CommentListWidget = () => {
                   <div>
                     <Group>
                       <Text className="text-gray-800">{entry.author}</Text>
-                      <Text size="sm" color="dimmed">
+                      <Text size="sm" c="dimmed">
                         {formatDate(entry.createdAt)}
                       </Text>
                     </Group>
@@ -217,12 +230,12 @@ export const CommentListWidget = () => {
                     </Text>
                   </div>
                   <ActionIcon
-                    color="red"
+                    c="red"
                     variant="subtle"
                     onClick={() => handleOpenDeleteModal(entry._id)}
                     className="hover:bg-red-50"
                   >
-                    액션 아이콘
+                    {...deleteIcon}
                     {/* <IconTrash size={18} /> */}
                   </ActionIcon>
                 </div>
@@ -243,11 +256,11 @@ export const CommentListWidget = () => {
             onChange={(e) => setDeletePassword(e.target.value)}
             mb="md"
           />
-          <Group>
+          <Group justify="flex-end">
             <Button variant="outline" onClick={close}>
               취소
             </Button>
-            <Button color="red" onClick={handleDelete}>
+            <Button c="red" onClick={handleDelete}>
               삭제
             </Button>
           </Group>

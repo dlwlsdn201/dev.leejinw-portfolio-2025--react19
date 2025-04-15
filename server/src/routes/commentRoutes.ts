@@ -4,7 +4,7 @@ import * as commentController from '@controllers/commentController';
 const router: Router = express.Router();
 
 // GET - 모든 댓글 조회
-router.get('/comment', commentController.getComments);
+router.get('/comments', commentController.getComments);
 
 // // GET - 특정 댓글 조회
 // router.get('/:id', commentController.getComment);
@@ -13,9 +13,9 @@ router.get('/comment', commentController.getComments);
 router.post('/comment', commentController.createComment);
 
 // PUT - 댓글 수정
-router.put('/:id', commentController.updateComment);
+router.put('/comment/:id', commentController.updateComment);
 
 // DELETE - 댓글 삭제
-router.delete('/:id', commentController.deleteComment);
+router.delete('/comment/:id', commentController.deleteComment);
 
 export default router;
