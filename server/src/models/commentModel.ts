@@ -58,4 +58,8 @@ commentSchema.methods.comparePassword = async function (
 };
 
 // Comment 모델 생성
-export const CommentModel = mongoose.model<IComment>('Comment', commentSchema);
+export const CommentModel = mongoose.model<IComment>(
+  'comment',
+  commentSchema,
+  'comments'
+); // 첫 번째 인자: name, 세 번째 인자: collection name(기본형: name의 복수형)

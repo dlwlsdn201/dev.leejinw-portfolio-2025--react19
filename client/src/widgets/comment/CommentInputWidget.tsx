@@ -41,24 +41,6 @@ export const CommentInputWidget = () => {
   const [deletePassword, setDeletePassword] = useState('');
   const [opened, { open, close }] = useDisclosure(false);
 
-  const fetchEntries = async () => {
-    try {
-      const response = await fetch('/api/comments');
-      const data = await response.json();
-      setEntries(data);
-    } catch (error) {
-      notifications.show({
-        title: '오류',
-        message: '방명록을 불러오지 못했습니다.',
-        color: 'red',
-      });
-    }
-  };
-
-  useEffect(() => {
-    fetchEntries();
-  }, []);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -86,7 +68,7 @@ export const CommentInputWidget = () => {
         setAuthor('');
         setPassword('');
         setContent('');
-        fetchEntries();
+        // fetchEntries();
         notifications.show({
           title: '성공',
           message: '방명록이 등록되었습니다.',
