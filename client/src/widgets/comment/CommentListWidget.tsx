@@ -14,6 +14,8 @@ import { useDisclosure } from '@mantine/hooks';
 import { toolsIconProvider } from '@/shared/assets/icon/tools';
 import { Content } from './component/Content';
 import { IconSize } from '@/app/config/icon';
+import { DELETE_COMMENT_DATA } from '@/features/comment/lib/api';
+import { CommentDeleteButton } from '@/features/comment';
 
 interface GuestbookEntry {
   _id: string;
@@ -43,9 +45,6 @@ export const CommentListWidget = () => {
   const [password, setPassword] = useState('');
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
-  const [deletePassword, setDeletePassword] = useState('');
-  const [opened, { open, close }] = useDisclosure(false);
 
   const fetchEntries = async () => {
     try {
@@ -125,57 +124,6 @@ export const CommentListWidget = () => {
     }
   };
 
-  const handleOpenDeleteModal = (id: string) => {
-    setDeleteId(id);
-    setDeletePassword('');
-    open();
-  };
-
-  const handleDelete = async () => {
-    if (!deleteId || !deletePassword.trim()) {
-      notifications.show({
-        title: '입력 오류',
-        message: '비밀번호를 입력해주세요.',
-        color: 'red',
-      });
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `http://localhost:8000/api/comment/${deleteId}`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ password: deletePassword }),
-        }
-      );
-
-      if (response.ok) {
-        close();
-        fetchEntries();
-        notifications.show({
-          title: '성공',
-          message: '방명록이 삭제되었습니다.',
-          color: 'green',
-        });
-      } else {
-        const error = await response.json();
-        throw new Error(error.message || '방명록 삭제에 실패했습니다.');
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        notifications.show({
-          title: '오류',
-          message: error.message,
-          color: 'red',
-        });
-      }
-    }
-  };
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('ko-KR', {
@@ -186,10 +134,6 @@ export const CommentListWidget = () => {
       minute: '2-digit',
     });
   };
-
-  const deleteIcon = toolsIconProvider({ keys: ['delete'] }).map(
-    ({ IconElement }, idx) => <IconElement key={idx} size={IconSize.SMALL} />
-  );
 
   return (
     <div className="w-full py-12 flex-[0.6]">
@@ -225,42 +169,17 @@ export const CommentListWidget = () => {
                     </Group>
                     <Content>{entry.content}</Content>
                   </div>
-                  <ActionIcon
-                    c="red"
-                    variant="subtle"
-                    onClick={() => handleOpenDeleteModal(entry._id)}
-                    className="hover:bg-red-50"
-                  >
-                    {...deleteIcon}
-                  </ActionIcon>
+                  <CommentDeleteButton
+                    deleteId={entry._id}
+                    /* TODO - [추후 entities 로 리팩터링 하여 Button 내부에서 lib 핸들러 함수로 리팩터링] */
+                    fetchEntries={fetchEntries}
+                  />
                 </div>
               </Paper>
             ))
           )}
         </div>
       </div>
-
-      <Modal opened={opened} onClose={close} title="방명록 삭제" centered>
-        <div className="p-2">
-          <Text size="sm" mb="md">
-            방명록을 삭제하려면 작성 시 입력했던 비밀번호를 입력해주세요.
-          </Text>
-          <PasswordInput
-            placeholder="비밀번호"
-            value={deletePassword}
-            onChange={(e) => setDeletePassword(e.target.value)}
-            mb="md"
-          />
-          <Group justify="flex-end">
-            <Button variant="outline" onClick={close}>
-              취소
-            </Button>
-            <Button c="red" onClick={handleDelete}>
-              삭제
-            </Button>
-          </Group>
-        </div>
-      </Modal>
     </div>
   );
 };
