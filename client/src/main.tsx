@@ -8,10 +8,9 @@ import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <MantineProvider defaultColorScheme="dark">
-      <Notifications />
-      <Router />
-    </MantineProvider>
-  </StrictMode>
+  // <StrictMode>
+  <MantineProvider defaultColorScheme="dark">
+    <Notifications />
+    <Router />
+  </MantineProvider>
 );
