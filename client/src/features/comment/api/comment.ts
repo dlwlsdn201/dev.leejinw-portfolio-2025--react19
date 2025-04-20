@@ -10,14 +10,47 @@ export const CREATE_COMMENT_DATA = async ({
   content: string;
   password: string;
 }) => {
-  try {
-    // await createComment({ author, content, password });
-    // 새로운 댓글 목록 불러오기
-    // loadComments();
+  if (!author.trim() || !content.trim() || !password.trim()) {
+    notifications.show({
+      title: '입력 오류',
+      message: '모든 필드를 입력해주세요.',
+      color: 'red',
+    });
+    return;
+  }
 
-    return { resultCode: 'ok' };
-  } catch (err) {
-    console.error(err);
+  try {
+    const response = await fetch('http://localhost:8000/api/comment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({ author, password, content }),
+    });
+
+    if (response.ok) {
+      notifications.show({
+        title: '성공',
+        message: '방명록이 등록되었습니다.',
+        position: 'top-right',
+        color: 'green',
+      });
+
+      return response;
+    } else {
+      const error = await response.json();
+      throw new Error(error.message || '방명록 등록에 실패했습니다.');
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      notifications.show({
+        title: '오류',
+        message: error.message,
+        position: 'top-right',
+        color: 'red',
+      });
+    }
   }
 };
 

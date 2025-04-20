@@ -23,15 +23,6 @@ const READ_COMMENTS_DATA = async () => {
       );
       result = sortedDataByDate;
     }
-
-    notifications.show({
-      title: '성공',
-      message: '방명록이 등록되었습니다.',
-      /* TODO - [추후 notification 을 모듈화하여 공통적인 props 값 선언은 생략하여 코드 길이 줄이기] */
-      color: 'green',
-      position: 'top-right',
-      autoClose: 3000,
-    });
   } catch (error) {
     if (error instanceof Error) {
       notifications.show({
@@ -49,7 +40,7 @@ const READ_COMMENTS_DATA = async () => {
 export const readComments = async <Record>({
   dispatch,
 }: {
-  dispatch: Dispatch<SetStateAction<Record[]>>;
+  dispatch: (updatedComments: Record[]) => void;
 }): Promise<void> => {
   const commentsList = await READ_COMMENTS_DATA();
   dispatch(commentsList);
