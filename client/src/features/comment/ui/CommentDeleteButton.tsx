@@ -6,22 +6,19 @@ import {
   PasswordInput,
   Text,
 } from '@mantine/core';
-import { DELETE_COMMENT_DATA } from '../lib/api';
 import { IconSize } from '@/app/config/icon';
 import { toolsIconProvider } from '@/shared/assets/icon/tools';
 import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
 import { notifications } from '@mantine/notifications';
+import { DELETE_COMMENT_DATA } from '@/features/comment/api/comment';
+import { readComments } from '@/entities/comment/api/comment';
+import { useCommentStore } from '@/store';
 
-export const CommentDeleteButton = ({
-  deleteId,
-  fetchEntries,
-}: {
-  deleteId: string;
-  fetchEntries: () => void;
-}) => {
+export const CommentDeleteButton = ({ deleteId }: { deleteId: string }) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [deletePassword, setDeletePassword] = useState('');
+  const { updateComments } = useCommentStore();
 
   const deleteComment = async () => {
     await DELETE_COMMENT_DATA({
@@ -30,7 +27,9 @@ export const CommentDeleteButton = ({
       callback: () => {
         console.log('삭제 성공');
         close();
-        fetchEntries();
+        readComments({
+          dispatch: updateComments,
+        });
       },
     });
   };
