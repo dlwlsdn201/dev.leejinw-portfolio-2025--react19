@@ -16,10 +16,13 @@ export const Section: React.FC<{
 }> = ({ title, id, children }) => (
   <section
     id={id}
-    className={`w-full h-[90vh] overflow-hidden flex flex-col items-center justify-between gap-y-4 text-white`}
+    className={`w-full h-[100vh]  overflow-hidden flex flex-col items-center justify-between gap-y-4 text-white`}
   >
     {title && (
-      <div data-aos="flip-down" className={`${TEXT_SIZE_CONFIG.SEMI_LARGE}`}>
+      <div
+        data-aos="flip-down"
+        className={`mt-[7rem]! ${TEXT_SIZE_CONFIG.SEMI_LARGE}`}
+      >
         {title}
       </div>
     )}
@@ -48,7 +51,7 @@ function Intro() {
     <div
       className={`${isDarkMode ? 'dark' : ''} h-full w-[100%] transition-colors`}
     >
-      <div className="mx-auto w-full h-full px-4 space-y-0 flex flex-col gap-[20rem]">
+      <div className="mx-auto w-full h-full px-4 space-y-0 flex flex-col">
         <Section id="section0">
           <IntroWidget />
         </Section>

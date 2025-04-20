@@ -6,6 +6,6 @@ export const StyledContainer = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className={`w-full h-[95vh]  ${PADDING_CONFIG.px_md}`}>{children}</div>
+    <div className={`w-full h-[100%]  ${PADDING_CONFIG.px_md}`}>{children}</div>
   );
 };
