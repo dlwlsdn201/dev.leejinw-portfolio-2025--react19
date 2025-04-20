@@ -6,15 +6,16 @@ import { useAos } from '@widgets/intro/hook/useAos';
 import { TEXT_SIZE_CONFIG } from '@app/config/style';
 import { useFullPageScroll } from '@shared/hooks/useFullPageScroll';
 
-type IntroSectionId = 0 | 1 | 2;
+// type IntroSectionId = 0 | 1 | 2;
 
 export const Section: React.FC<{
   title?: string;
-  sectionRef: React.RefObject<HTMLDivElement | null>;
+  id: string;
+  // sectionRef: React.RefObject<HTMLDivElement | null>;
   children: React.ReactNode;
-}> = ({ title, sectionRef, children }) => (
+}> = ({ title, id, children }) => (
   <section
-    ref={sectionRef}
+    id={id}
     className={`w-full h-[90vh] overflow-hidden flex flex-col items-center justify-between gap-y-4 text-white`}
   >
     {title && (
@@ -32,8 +33,15 @@ function Intro() {
   useAos();
 
   /* SECTION - [FullPage scroll 효과 로직 custom hook] &*/
-  const { sectionRefs } = useFullPageScroll<IntroSectionId>({
-    initialValue: 0,
+  // const { sectionRefs } = useFullPageScroll<IntroSectionId>({
+  //   initialValue: 0,
+  // });
+
+  const sectionIds = ['section0', 'section1', 'section2'];
+
+  useFullPageScroll({
+    sectionIds,
+    scrollDelay: 1500,
   });
 
   return (
@@ -41,13 +49,13 @@ function Intro() {
       className={`${isDarkMode ? 'dark' : ''} h-full w-[100%] transition-colors`}
     >
       <div className="mx-auto w-full h-full px-4 space-y-0 flex flex-col gap-[20rem]">
-        <Section sectionRef={sectionRefs[0]}>
+        <Section id="section0">
           <IntroWidget />
         </Section>
-        <Section sectionRef={sectionRefs[1]} title="타임라인">
+        <Section id="section1" title="타임라인">
           <TimelineWidget />
         </Section>
-        <Section sectionRef={sectionRefs[2]} title="커리어">
+        <Section id="section2" title="커리어">
           <ProjectAlbumWidget />
         </Section>
       </div>
