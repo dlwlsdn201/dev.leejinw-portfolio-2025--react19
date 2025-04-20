@@ -18,28 +18,6 @@ import { CommentDeleteButton } from '@/features/comment';
 import { readComments } from '@/entities/comment/api/comment';
 import { useCommentStore } from '@/store';
 
-interface GuestbookEntry {
-  _id: string;
-  author: string;
-  content: string;
-  createdAt: string;
-}
-
-const TEST_ENTRIES: GuestbookEntry[] = [
-  {
-    _id: '1',
-    author: '홍길동',
-    content: '안녕하세요. 홍길동입니다.',
-    createdAt: '2021-09-01T12:00:00',
-  },
-  {
-    _id: '2',
-    author: '김미리',
-    content: '안녕하세요. 김미리입니다.',
-    createdAt: '2021-10-01T12:00:00',
-  },
-];
-
 export const CommentListWidget = () => {
   const [author, setAuthor] = useState('');
   const [password, setPassword] = useState('');
@@ -53,55 +31,6 @@ export const CommentListWidget = () => {
       dispatch: updateComments,
     });
   }, []);
-
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-
-  //   if (!author.trim() || !content.trim() || !password.trim()) {
-  //     notifications.show({
-  //       title: '입력 오류',
-  //       message: '모든 필드를 입력해주세요.',
-  //       color: 'red',
-  //     });
-  //     return;
-  //   }
-
-  //   setLoading(true);
-  //   try {
-  //     const response = await fetch('/api/guestbook', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ author, password, content }),
-  //     });
-
-  //     if (response.ok) {
-  //       setAuthor('');
-  //       setPassword('');
-  //       setContent('');
-  //       readComments();
-  //       notifications.show({
-  //         title: '성공',
-  //         message: '방명록이 등록되었습니다.',
-  //         color: 'green',
-  //       });
-  //     } else {
-  //       const error = await response.json();
-  //       throw new Error(error.message || '방명록 등록에 실패했습니다.');
-  //     }
-  //   } catch (error) {
-  //     if (error instanceof Error) {
-  //       notifications.show({
-  //         title: '오류',
-  //         message: error.message,
-  //         color: 'red',
-  //       });
-  //     }
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
