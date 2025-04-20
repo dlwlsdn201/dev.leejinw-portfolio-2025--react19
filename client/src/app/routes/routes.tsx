@@ -17,11 +17,11 @@ export const routes: Route[] = [
     label: 'Intro',
     element: <Intro />,
   },
-  {
-    path: '/projects',
-    label: 'Projects',
-    element: <Intro />,
-  },
+  // {
+  //   path: '/projects',
+  //   label: 'Projects',
+  //   element: <Intro />,
+  // },
   {
     path: '/comment',
     label: 'Comment',
