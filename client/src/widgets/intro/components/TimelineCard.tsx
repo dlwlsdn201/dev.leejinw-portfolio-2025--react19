@@ -27,7 +27,7 @@ export const TimelineCard: React.FC<TimelineCardProps> = ({ item, index }) => {
     >
       <div className={`w-5/12 p-4 ${isLeft ? 'text-right' : 'text-left'}`}>
         <div
-          className={`${CARD_BACKGROUND} border-2 border-gray-400/30 p-6 rounded-lg shadow-xl hover:transform hover:scale-105 transition duration-300`}
+          className={`${CARD_BACKGROUND} border-2 border-gray-400/30 p-4 rounded-lg shadow-xl hover:transform hover:scale-105 transition duration-300`}
         >
           <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
           <p className="text-gray-300 text-sm mb-2">{item.period}</p>
