@@ -3,12 +3,12 @@ import { create } from 'zustand';
 import { Comment } from '@/features/comment/model/comment';
 
 interface UseCommentStore {
-  comments: Comment[];
+  comments: Comment[] | undefined;
   updateComments: (data: Comment[]) => void;
 }
 
 export const useCommentStore = create<UseCommentStore>((set) => ({
-  comments: [],
+  comments: undefined,
   updateComments: (updatedComments) =>
     set(() => ({ comments: updatedComments })),
 }));
