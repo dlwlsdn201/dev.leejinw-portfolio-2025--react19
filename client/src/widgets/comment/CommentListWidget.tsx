@@ -1,29 +1,12 @@
 // GuestBook.tsx
-import { useState, useEffect } from 'react';
-import {
-  Button,
-  Paper,
-  Text,
-  Group,
-  PasswordInput,
-  Modal,
-  ActionIcon,
-} from '@mantine/core';
-import { notifications } from '@mantine/notifications';
-import { useDisclosure } from '@mantine/hooks';
-import { toolsIconProvider } from '@/shared/assets/icon/tools';
+import { useEffect } from 'react';
+import { Paper, Text, Group } from '@mantine/core';
 import { Content } from './component/Content';
-import { IconSize } from '@/app/config/icon';
 import { CommentDeleteButton } from '@/features/comment';
 import { readComments } from '@/entities/comment/api/comment';
 import { useCommentStore } from '@/store';
 
 export const CommentListWidget = () => {
-  const [author, setAuthor] = useState('');
-  const [password, setPassword] = useState('');
-  const [content, setContent] = useState('');
-  const [loading, setLoading] = useState(false);
-
   const { comments, updateComments } = useCommentStore();
 
   useEffect(() => {
