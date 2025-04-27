@@ -1,4 +1,4 @@
-import { StrictMode } from 'react';
+// import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Router } from './app/routes/routes';
 import { MantineProvider } from '@mantine/core';

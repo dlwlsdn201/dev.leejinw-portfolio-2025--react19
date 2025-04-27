@@ -5,7 +5,7 @@ import { StyledContainer } from './style/StyledContainer';
 const CONTENTS_VALUE = "Let's see about dev.leejinw 🤓"; // 출력할 텍스트
 
 export const IntroWidget = () => {
-  const [displayText, setDisplayText] = useState('');
+  const [displayText, setDisplayText] = useState<string>('');
   const [index, setIndex] = useState(0);
 
   // 타이핑 효과 구현
@@ -38,9 +38,11 @@ export const IntroWidget = () => {
             scale: 1,
           }}
         >
-          {displayText}
+          <span className=" mobile:text-4xl tablet:text-5xl laptop:text-6xl">
+            {displayText}
+          </span>
           <motion.span
-            className="w-1 h-8 bg-gray-300 inline-block animate-blink"
+            className="tablet:w-1 h-8 bg-gray-300 inline-block animate-blink"
             animate={{ opacity: [0, 1, 0] }}
             transition={{ repeat: Infinity, duration: 0.8 }}
           />
