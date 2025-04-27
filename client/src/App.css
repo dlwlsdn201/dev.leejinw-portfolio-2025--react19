@@ -1,3 +1,7 @@
+body: {
+  font-size: initial!;
+}
+
 #root {
   /* max-width: 1280px; */
   margin: 0;

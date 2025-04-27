@@ -16,15 +16,15 @@ export const Section: React.FC<{
 }> = ({ title, id, children }) => (
   <section
     id={id}
-    className={`w-full h-[100vh]  overflow-hidden flex flex-col items-center justify-between gap-y-4 text-white`}
+    className={`w-full h-[100vh] overflow-hidden flex flex-col items-center justify-between gap-y-4 text-white`}
   >
     {title && (
-      <div
+      <span
         data-aos="flip-down"
-        className={`mt-[7rem]! ${TEXT_SIZE_CONFIG.SEMI_LARGE}`}
+        className={`mobile:${TEXT_SIZE_CONFIG.MEDIUM} mobile:mt-[5rem]! laptop:mt-[7rem] laptop:${TEXT_SIZE_CONFIG.LARGE}`}
       >
         {title}
-      </div>
+      </span>
     )}
     {children}
   </section>
@@ -51,7 +51,7 @@ function Intro() {
     <div
       className={`${isDarkMode ? 'dark' : ''} h-full w-[100%] transition-colors`}
     >
-      <div className="mx-auto w-full h-full px-4 space-y-0 flex flex-col">
+      <div className="mx-auto w-full h-full mobile:px-0 tablet:px-4 space-y-0 flex flex-col">
         <Section id="section0">
           <IntroWidget />
         </Section>

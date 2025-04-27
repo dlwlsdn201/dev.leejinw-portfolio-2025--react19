@@ -49,7 +49,7 @@ export const TimelineWidget: React.FC = () => {
 
   return (
     <StyledContainer>
-      <div className="h-[100%] relative ">
+      <div className="h-[100%] relative">
         <div
           data-aos="zoom-in"
           data-aos-offset="0"

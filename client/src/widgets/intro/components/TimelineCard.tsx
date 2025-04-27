@@ -1,7 +1,7 @@
 // TimelineCard.tsx
 import React from 'react';
 import 'aos/dist/aos.css';
-import { CARD_BACKGROUND } from '@app/config/style';
+import { CARD_BACKGROUND, TEXT_SIZE_CONFIG } from '@app/config/style';
 
 interface TimelineCardProps {
   item: TimelineItem;
@@ -25,11 +25,17 @@ export const TimelineCard: React.FC<TimelineCardProps> = ({ item, index }) => {
       data-aos-delay={index * 200} // 200ms씩 delay
       className={`flex w-full ${isLeft ? 'justify-end' : 'justify-start'}`}
     >
-      <div className={`w-5/12 p-4 ${isLeft ? 'text-right' : 'text-left'}`}>
+      <div
+        className={`mobile:w-11/24 tablet:w-5/12 mobile:p-0 tablet:p-4 ${isLeft ? 'text-right' : 'text-left'}`}
+      >
         <div
-          className={`${CARD_BACKGROUND} border-2 border-gray-400/30 p-6 rounded-lg shadow-xl hover:transform hover:scale-105 transition duration-300`}
+          className={`${CARD_BACKGROUND} border-2 border-gray-400/30 mobile:p-4 tablet:p-6 rounded-lg shadow-xl hover:transform hover:scale-105 transition duration-300`}
         >
-          <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+          <span
+            className={`mobile:text-[${TEXT_SIZE_CONFIG.SMALL}] tablet:text-xl font-bold text-white mb-2}`}
+          >
+            {item.title}
+          </span>
           <p className="text-gray-300 text-sm mb-2">{item.period}</p>
           {item.description && (
             <p className="text-gray-400 text-sm">{item.description}</p>
