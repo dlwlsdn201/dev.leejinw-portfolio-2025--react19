@@ -3,7 +3,6 @@
 /* min-width */
 @theme {
   --breakpoint-*: initial;
-
   --breakpoint-mobile: 20rem; /* width >= 320px */
   --breakpoint-tablet: 37.5rem; /* width >= 600px */
   --breakpoint-laptop: 56.25rem; /* width >= 900px */
