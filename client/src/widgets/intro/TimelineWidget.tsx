@@ -40,9 +40,9 @@ export const TimelineWidget: React.FC = () => {
     },
     {
       id: 6,
-      title: '빌딩 에너지 관리 솔루션 기업 입사',
+      title: '(주)엔엑스',
       period: '2021.05 ~ ',
-      description: 'Tech-Cell Team FrontEnd Engineer / 선임연구원 ',
+      description: 'Tech-Cell Team / FrontEnd Engineer / 선임연구원 ',
       position: 'right',
     },
   ];

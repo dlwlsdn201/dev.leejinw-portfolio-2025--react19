@@ -11,7 +11,6 @@ import { useFullPageScroll } from '@shared/hooks/useFullPageScroll';
 export const Section: React.FC<{
   title?: string;
   id: string;
-  // sectionRef: React.RefObject<HTMLDivElement | null>;
   children: React.ReactNode;
 }> = ({ title, id, children }) => (
   <section
@@ -21,7 +20,7 @@ export const Section: React.FC<{
     {title && (
       <span
         data-aos="flip-down"
-        className={`mobile:${TEXT_SIZE_CONFIG.MEDIUM} mobile:mt-[5rem]! laptop:mt-[7rem] laptop:${TEXT_SIZE_CONFIG.LARGE}`}
+        className={`mobile:text-[1.5rem] mobile:mt-[5rem]! laptop:mt-[7rem] laptop:${TEXT_SIZE_CONFIG.LARGE}`}
       >
         {title}
       </span>
@@ -34,11 +33,6 @@ function Intro() {
   const { isDarkMode } = useThemeStore();
 
   useAos();
-
-  /* SECTION - [FullPage scroll 효과 로직 custom hook] &*/
-  // const { sectionRefs } = useFullPageScroll<IntroSectionId>({
-  //   initialValue: 0,
-  // });
 
   const sectionIds = ['section0', 'section1', 'section2'];
 
@@ -58,7 +52,7 @@ function Intro() {
         <Section id="section1" title="타임라인">
           <TimelineWidget />
         </Section>
-        <Section id="section2" title="커리어">
+        <Section id="section2" title="프로젝트">
           <ProjectAlbumWidget />
         </Section>
       </div>
