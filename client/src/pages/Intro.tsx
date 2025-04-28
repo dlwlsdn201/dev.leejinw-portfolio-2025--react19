@@ -34,11 +34,13 @@ function Intro() {
 
   useAos();
 
+  /* SECTION - [FullPage scroll 효과 로직 custom hook] &*/
+
   const sectionIds = ['section0', 'section1', 'section2'];
 
   useFullPageScroll({
     sectionIds,
-    scrollDelay: 1500,
+    scrollDelay: 500,
   });
 
   return (

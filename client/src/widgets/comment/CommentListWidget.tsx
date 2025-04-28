@@ -1,37 +1,10 @@
 // GuestBook.tsx
-import { useState, useEffect } from 'react';
-import {
-  Button,
-  Paper,
-  Text,
-  Group,
-  PasswordInput,
-  Modal,
-  ActionIcon,
-} from '@mantine/core';
-import { notifications } from '@mantine/notifications';
-import { useDisclosure } from '@mantine/hooks';
-import { toolsIconProvider } from '@/shared/assets/icon/tools';
+import { Paper, Text, Group, Skeleton } from '@mantine/core';
 import { Content } from './component/Content';
-import { IconSize } from '@/app/config/icon';
 import { CommentDeleteButton } from '@/features/comment';
-import { readComments } from '@/entities/comment/api/comment';
-import { useCommentStore } from '@/store';
+import { useReadComments } from '@/entities/comment';
 
 export const CommentListWidget = () => {
-  const [author, setAuthor] = useState('');
-  const [password, setPassword] = useState('');
-  const [content, setContent] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const { comments, updateComments } = useCommentStore();
-
-  useEffect(() => {
-    readComments({
-      dispatch: updateComments,
-    });
-  }, []);
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('ko-KR', {
@@ -43,16 +16,20 @@ export const CommentListWidget = () => {
     });
   };
 
+  const { comments, loading } = useReadComments({});
+
   return (
     <div className="w-full py-12 flex-[0.6]">
       <div className="my-8">
         <div className="flex flex-col gap-y-2">
-          {comments.length === 0 ? (
+          {comments?.length === 0 ? (
             <Text c="dimmed" py="xl">
-              아직 작성된 방명록이 없습니다. 첫 번째 방명록을 작성해보세요!
+              <Skeleton visible={loading} width="90%" radius={8}>
+                아직 작성된 방명록이 없습니다. 첫 번째 방명록을 작성해보세요!
+              </Skeleton>
             </Text>
           ) : (
-            comments.map((comment) => (
+            comments?.map((comment) => (
               <Paper
                 styles={{
                   // Ref. CommentInputWidget.tsx:175
@@ -69,15 +46,19 @@ export const CommentListWidget = () => {
               >
                 <div className="flex justify-between items-start">
                   <div className="w-full flex flex-col items-start gap-y-2">
-                    <Group>
-                      <span className="font-bold text-lg">
-                        {comment.author}
-                      </span>
-                      <Text size="sm" c="dimmed">
-                        {formatDate(comment.createdAt)}
-                      </Text>
-                    </Group>
-                    <Content>{comment.content}</Content>
+                    <Skeleton visible={loading} width="90%" radius={8}>
+                      <Group>
+                        <span className="font-bold text-lg">
+                          {comment.author}
+                        </span>
+                        <Text size="sm" c="dimmed">
+                          {formatDate(comment.createdAt)}
+                        </Text>
+                      </Group>
+                    </Skeleton>
+                    <Skeleton visible={loading} width="90%" radius={8}>
+                      <Content>{comment.content}</Content>
+                    </Skeleton>
                   </div>
                   <CommentDeleteButton
                     deleteId={comment._id}
