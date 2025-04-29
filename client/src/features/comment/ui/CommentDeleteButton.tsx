@@ -25,7 +25,6 @@ export const CommentDeleteButton = ({ deleteId }: { deleteId: string }) => {
       deleteId,
       deletePassword,
       callback: () => {
-        console.log('삭제 성공');
         close();
         readComments({
           dispatch: updateComments,
@@ -66,10 +65,15 @@ export const CommentDeleteButton = ({ deleteId }: { deleteId: string }) => {
             mb="md"
           />
           <Group justify="flex-end">
-            <Button variant="outline" onClick={close}>
+            <Button
+              type="button"
+              variant="outline"
+              color="white"
+              onClick={close}
+            >
               취소
             </Button>
-            <Button c="red" onClick={deleteComment}>
+            <Button color="red" type="button" onClick={deleteComment}>
               삭제
             </Button>
           </Group>
