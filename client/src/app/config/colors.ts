@@ -1,6 +1,7 @@
 export const COLOR_THEME = {
   light: {
     // UI
+    default: '#FFFFFF', // 부드러운 화이트
     background: '#F4F6F9', // 부드러운 회색빛 화이트
     primary: '#3B82F6', // 활기찬 블루
     secondary: '#10B981', // 생동감 있는 녹색
