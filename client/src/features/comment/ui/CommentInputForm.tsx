@@ -16,8 +16,7 @@ export const CommentInputForm = () => {
   const [author, setAuthor] = useState('');
   const [password, setPassword] = useState('');
   const [content, setContent] = useState('');
-  const [loading, setLoading] = useState(false);
-  const { updateComments } = useCommentStore();
+  const { updateComments, loading, switchLoading } = useCommentStore();
 
   const resetForm = () => {
     setAuthor('');
@@ -27,28 +26,29 @@ export const CommentInputForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    switchLoading(true);
+
     const response = await CREATE_COMMENT_DATA({
       author,
       content,
       password,
     });
 
-    if (response?.ok) {
-      resetForm();
-      readComments({
-        dispatch: updateComments,
-      });
-    }
-
-    setLoading(false);
+    setTimeout(() => {
+      if (response?.ok) {
+        resetForm();
+        readComments({
+          dispatch: updateComments,
+        });
+      }
+    }, 1000);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <Stack gap={30}>
-        <Title order={3} className="">
-          작성하기
+        <Title order={3} className="mobile:hidden tablet:block">
+          새 방명록
         </Title>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <TextInput
@@ -59,6 +59,7 @@ export const CommentInputForm = () => {
             onChange={(e) => setAuthor(e.target.value)}
             required
             className="w-full"
+            disabled={loading}
           />
           <PasswordInput
             label="비밀번호"
@@ -68,6 +69,7 @@ export const CommentInputForm = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
             className="w-full"
+            disabled={loading}
           />
         </div>
         <Textarea
@@ -80,12 +82,14 @@ export const CommentInputForm = () => {
           onChange={(e) => setContent(e.target.value)}
           required
           className="w-full"
+          disabled={loading}
         />
         <Button
           type="submit"
           loading={loading}
           size="md"
           className="bg-blue-600 hover:bg-blue-700 transition-colors w-full"
+          disabled={loading}
         >
           등록하기
         </Button>

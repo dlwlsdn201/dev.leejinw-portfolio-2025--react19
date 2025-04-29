@@ -9,8 +9,8 @@ interface UseReadCommentsProps {
 export const useReadComments = ({
   refreshSubscription = [],
 }: UseReadCommentsProps) => {
-  const { comments, updateComments } = useCommentStore();
-  const [loading, setLoading] = useState<boolean>(true);
+  const { comments, updateComments, loading, switchLoading } =
+    useCommentStore();
 
   useEffect(() => {
     readComments({
@@ -19,12 +19,8 @@ export const useReadComments = ({
   }, [...refreshSubscription]);
 
   useEffect(() => {
-    console.log('comments', comments);
-    if (comments) {
-      setTimeout(() => {
-        setLoading(false);
-      }, 3000);
-    }
+    console.log('읽기 실행');
+    switchLoading(false);
   }, [comments]);
 
   return {

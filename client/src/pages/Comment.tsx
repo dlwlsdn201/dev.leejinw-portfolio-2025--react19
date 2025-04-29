@@ -9,7 +9,7 @@ export const CommentPage: React.FC = () => {
   return (
     <CommentPageLayout>
       <CommentTitle />
-      <div className="w-full flex gap-x-6">
+      <div className="w-full flex py-10 gap-x-6">
         <CommentListWidget />
         <CommentInputWidget />
       </div>
