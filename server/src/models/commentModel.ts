@@ -1,6 +1,6 @@
 // src/models/commentModel.ts
 import mongoose, { Document, Schema } from 'mongoose';
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 
 // Comment Document 인터페이스 정의
 export interface IComment extends Document {
@@ -42,8 +42,8 @@ commentSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
 
   try {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+    const salt = await bcryptjs.genSalt(10);
+    this.password = await bcryptjs.hash(this.password, salt);
     next();
   } catch (error) {
     next(error as Error);
@@ -54,7 +54,7 @@ commentSchema.pre('save', async function (next) {
 commentSchema.methods.comparePassword = async function (
   candidatePassword: string
 ): Promise<boolean> {
-  return await bcrypt.compare(candidatePassword, this.password);
+  return await bcryptjs.compare(candidatePassword, this.password);
 };
 
 // Comment 모델 생성
