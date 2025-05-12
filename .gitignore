@@ -8,7 +8,8 @@ dist
 *.log
 
 # BlueJ files
-**/*.env.*
+.env.*
+.env
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
