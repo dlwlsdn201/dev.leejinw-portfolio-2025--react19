@@ -20,14 +20,17 @@ export const CREATE_COMMENT_DATA = async ({
   }
 
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/comment`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({ author, password, content }),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/comment`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ author, password, content }),
+      }
+    );
 
     if (response.ok) {
       notifications.show({
@@ -75,7 +78,7 @@ export const DELETE_COMMENT_DATA = async ({
 
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/comment/${deleteId}`,
+      `${import.meta.env.VITE_API_URL}/api/comment/${deleteId}`,
       {
         method: 'DELETE',
         headers: {

@@ -8,12 +8,15 @@ import { Dispatch, SetStateAction } from 'react';
 const READ_COMMENTS_DATA = async () => {
   let result = [];
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/comments`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/comments`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
     if (response.ok) {
       const data = await response.json();
