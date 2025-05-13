@@ -20,7 +20,7 @@ export const CREATE_COMMENT_DATA = async ({
   }
 
   try {
-    const response = await fetch('http://localhost:8000/api/comment', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/comment`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export const DELETE_COMMENT_DATA = async ({
 
   try {
     const response = await fetch(
-      `http://localhost:8000/api/comment/${deleteId}`,
+      `${import.meta.env.VITE_API_URL}/comment/${deleteId}`,
       {
         method: 'DELETE',
         headers: {
