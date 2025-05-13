@@ -19,7 +19,7 @@ const dev = process.env.NODE_ENV !== 'production';
 // app.use(cors()); // 기본값: cors() (모든 Origin을 허용하지 않음.)
 app.use(
   cors({
-    origin: 'http://localhost:3000', // Client 앱의 주소
+    origin: process.env.CLIENT_ORIGIN || 'http://localhost:3000', // Client 앱의 주소
     // methods: ['GET', 'POST', 'PUT', 'DELETE'], // 허용할 HTTP 메서드
     credentials: true, // 쿠키를 포함한 요청을 허용
   })
