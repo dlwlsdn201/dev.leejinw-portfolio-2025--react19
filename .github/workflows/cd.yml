@@ -22,6 +22,7 @@ jobs:
       AWS_REGION: ${{ vars.AWS_REGION }}
       S3_BUCKET_NAME: ${{ vars.S3_BUCKET_NAME }}
       DISTRIBUTION_ID: ${{ vars.DISTRIBUTION_ID }}
+      VITE_API_URL: ${{ vars.VITE_API_URL }}
 
     steps:
       - name: Test Environment Variables
@@ -48,8 +49,12 @@ jobs:
       - name: Install dependencies for server
         run: cd server && pnpm install # pnpm으로 server 의존성 설치
 
-      - name: Build project
-        run: pnpm run build:client # pnpm으로 client 빌드 실행
+      - name:
+          Build project
+          # pnpm으로 client 빌드 실행
+        run: |
+          echo "VITE_API_URL=$VITE_API_URL" > ./client/.env.production
+          pnpm run build:client
 
       - name: Deploy to S3
         run: |
