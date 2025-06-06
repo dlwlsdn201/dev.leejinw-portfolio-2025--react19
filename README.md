@@ -2,6 +2,8 @@
 
 ### 개요
 
+![이미지](https://github.com/user-attachments/assets/d3e940a5-494e-4d1b-b7f8-0594192ba3ff)
+
 [사이트 바로가기](http://dev-leejinw.s3-website.ap-northeast-2.amazonaws.com)
 
 ### 구성
